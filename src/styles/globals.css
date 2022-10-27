@@ -10,3 +10,14 @@
         font-family: 'Poppins', sans-serif;
     }
 }
+
+@layer components {
+    .neon {
+        box-shadow: 0 4px 2px -2px #e3a2ff,
+         0 0 .2rem #fff,
+        0 0 .2rem #bc13fe,
+        0 0 0.2rem #bc13fe, 
+        0 0 .75rem #bc13fe,
+        inset 0 0 .5rem #bc13fe;
+    }
+}
