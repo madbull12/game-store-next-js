@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import 'swiper/css';
 import Image from "next/image";
+import parse from 'html-react-parser'
 
 import { rawgClient } from "../../../lib/axios";
 
@@ -22,6 +23,8 @@ const GameDetailsPage = () => {
     return res.data;
   }
   
+
+
 
   // console.log(game)
   console.log(isReady, query);
@@ -60,7 +63,6 @@ const GameDetailsPage = () => {
   const {
     data: gameScreenshots,
     isLoading:screenshotsLoading,
-    refetch:screenshotRefetch,
     isFetching:screenshotFetching
   
   } = useQuery<GameScreenshots>(
@@ -72,6 +74,7 @@ const GameDetailsPage = () => {
       
     }
   );
+
 
   // useEffect(()=>{
   //   refetch()
@@ -133,29 +136,28 @@ const GameDetailsPage = () => {
             navigation
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
-            className="flex-[0.75]"
+            className="flex-[0.75] relative rounded-lg "
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log('slide change')}
           >
             
             <SwiperSlide>
                 <Image
-                className="rounded-lg object-cover"
+                className="rounded-lg object-cover hover:scale-110 transition-all ease-in-out duration-200 "
                   src={game?.background_image ?? ""}
-                  // layout="fill"
-                  width={600}
-                  height={400}
+                  layout="fill"
+                  // width={600}
+                  // height={400}
                 />
             </SwiperSlide>
         
            {gameScreenshots?.results.map((screenshot)=>(
             <SwiperSlide>
               <Image
-                className="rounded-lg object-cover"
+                className="rounded-lg object-cover hover:scale-110 transition-all ease-in-out duration-200 "
                 src={screenshot.image}
-                // layout="fill"
-                width={600}
-                height={400}
+                layout="fill"
+              
               />
             </SwiperSlide>
           
@@ -163,8 +165,11 @@ const GameDetailsPage = () => {
            
           </Swiper>
           
-     
-            <h1 className="text-white flex-[0.5]">{game?.description}</h1>
+            
+            <div className="text-gray-400 flex-[0.5]">
+              {parse(game?.description)}
+            </div>
+            {/* <p className="text-gray-400 flex-[0.5]">{convertStringToHTML(game?.description)}</p> */}
           
         </div>
 
