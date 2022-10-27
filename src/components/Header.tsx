@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+
 import { BiSearch } from "react-icons/bi";
 import Profile from "./Profile";
 const Header = () => {

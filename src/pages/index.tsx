@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
-import { motion, MotionValue, useMotionValue, useTransform } from "framer-motion";
+
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IGame } from "../../interface";
