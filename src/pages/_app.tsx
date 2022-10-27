@@ -7,6 +7,7 @@ import { trpc } from "../utils/trpc";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Layout from "../components/Layout";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -14,6 +15,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <Layout>
         <Component {...pageProps} />
 

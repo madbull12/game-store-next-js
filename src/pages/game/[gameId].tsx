@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import fetchData from "../../../rawg/fetchData";
 import React, { SetStateAction, useEffect, useState } from "react";
 import Body from "../../components/Body";
@@ -6,21 +6,38 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { BiLeftArrow } from "react-icons/bi";
 import Loader from "../../components/Loader";
 import Link from "next/link";
-import { IGame, IGameDetails } from "../../../interface";
+import { GameScreenshots, IGame, IGameDetails } from "../../../interface";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import 'swiper/css';
+import Image from "next/image";
 const GameDetailsPage = () => {
   const { query, isReady, back } = useRouter();
 
 
   console.log(isReady, query);
+  // const [gameDetails, gameScreenshots] = useQueries({
+  //   queries: [
+  //     {
+  //       queryKey: ['gameDetails'],
+  //       queryFn: () => fetchData(`https://api.rawg.io/api/games/${query?.gameId}?`)
+          
+  //     },
+
+  //     {
+  //       queryKey: ['gameScreenshots'],
+  //       queryFn: () => fetchData(`https://api.rawg.io/api/games/${game?.id}/screenshots?`)
+          
+  //     },
+  //   ],
+  // });
 
   // const { gameId } = router.query;
   const {
     data: game,
     isLoading,
     isFetching,
+    
     refetch,
   } = useQuery<IGameDetails>(
     ["fetchDetails"],
@@ -31,22 +48,36 @@ const GameDetailsPage = () => {
     
     }
   );
+  const {
+    data: gameScreenshots,
+    isLoading:screenshotsLoading,
+    refetch:screenshotRefetch,
+    isFetching:screenshotFetching
+  
+  } = useQuery<GameScreenshots>(
+    ["fetchScreenshots"],
+    () => fetchData(`https://api.rawg.io/api/games/${game?.id}/screenshots?`),
+    {
+        staleTime:1000
+      
+    
+    }
+  );
 
-  // useEffect(()=>{
-  //   refetch()
-  // },[query.gameId])
+  useEffect(()=>{
+    refetch()
+  },[query.gameId])
 
-  if (isLoading )
+  if (isLoading)
     return (
       <div className="min-h-screen justify-center pl-60 pt-8">
         <Loader />
       </div>
     );
 
-    if(isFetching) return <Body>{null}</Body>
+    if(isFetching || screenshotFetching) return <Body>{null}</Body>
 
-  console.log(game);
-  console.log(isReady)
+  console.log(gameScreenshots)
 
 
 
@@ -83,25 +114,51 @@ const GameDetailsPage = () => {
             {game?.name}
           </motion.h1>
         </div>
-        <div>
-        <Swiper
-          // install Swiper modules
-          // modules={[Navigation, Pagination, Scrollbar, A11y]}
-          spaceBetween={50}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log('slide change')}
-        >
-          <SwiperSlide>Slide 1</SwiperSlide>
-          <SwiperSlide>Slide 2</SwiperSlide>
-          <SwiperSlide>Slide 3</SwiperSlide>
-          <SwiperSlide>Slide 4</SwiperSlide>
-          ...
-        </Swiper>
+        <div className="flex gap-x-4 mt-4 ">
+     
+            <Swiper
+            // install Swiper modules
+            // modules={[Navigation, Pagination, Scrollbar, A11y]}
+            // spaceBetween={50}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: true }}
+            className="flex-[0.75]"
+            onSwiper={(swiper) => console.log(swiper)}
+            onSlideChange={() => console.log('slide change')}
+          >
+            
+            <SwiperSlide>
+                <Image
+                className="rounded-lg object-cover"
+                  src={game?.background_image ?? ""}
+                  // layout="fill"
+                  width={600}
+                  height={400}
+                />
+            </SwiperSlide>
+        
+          {gameScreenshots?.results.map((screenshot)=>(
+            <SwiperSlide>
+              <Image
+                className="rounded-lg object-cover"
+                src={screenshot.image}
+                // layout="fill"
+                width={600}
+                height={400}
+              />
+            </SwiperSlide>
+          
+          ))}
+           
+          </Swiper>
+          
+     
+            <h1 className="text-white flex-[0.5]">{game?.description}</h1>
+          
         </div>
+
         
       </Body>
     </>

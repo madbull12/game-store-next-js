@@ -149,6 +149,17 @@ export interface IGameDetails {
 export interface AddedByStatus {
 }
 
+export interface Screenshot {
+    image:  string;
+    hidden: boolean;
+}
+
+
+export interface GameScreenshots { 
+    results:Screenshot[]
+    
+}
+
 export interface EsrbRating {
     id:   number;
     slug: string;
