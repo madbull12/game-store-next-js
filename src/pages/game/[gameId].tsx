@@ -11,10 +11,19 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import 'swiper/css';
 import Image from "next/image";
+
+import { rawgClient } from "../../../lib/axios";
+
 const GameDetailsPage = () => {
   const { query, isReady, back } = useRouter();
 
+  const fetchDetails = async() => {
+    const res  = await rawgClient.get(`/games/${query?.gameId}?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`);
+    return res.data;
+  }
+  
 
+  // console.log(game)
   console.log(isReady, query);
   // const [gameDetails, gameScreenshots] = useQueries({
   //   queries: [
@@ -41,7 +50,7 @@ const GameDetailsPage = () => {
     refetch,
   } = useQuery<IGameDetails>(
     ["fetchDetails"],
-    () => fetchData(`https://api.rawg.io/api/games/${query?.gameId}?`),
+    fetchDetails,
     {
       refetchOnWindowFocus: false,
       // refetchOnMount:true,
@@ -58,15 +67,15 @@ const GameDetailsPage = () => {
     ["fetchScreenshots"],
     () => fetchData(`https://api.rawg.io/api/games/${game?.id}/screenshots?`),
     {
-        staleTime:1000
+      enabled:!isFetching,
+      refetchOnWindowFocus: false,
       
-    
     }
   );
 
-  useEffect(()=>{
-    refetch()
-  },[query.gameId])
+  // useEffect(()=>{
+  //   refetch()
+  // },[query.gameId])
 
   if (isLoading)
     return (
@@ -77,7 +86,7 @@ const GameDetailsPage = () => {
 
     if(isFetching || screenshotFetching) return <Body>{null}</Body>
 
-  console.log(gameScreenshots)
+  // console.log(gameScreenshots)
 
 
 
@@ -139,7 +148,7 @@ const GameDetailsPage = () => {
                 />
             </SwiperSlide>
         
-          {gameScreenshots?.results.map((screenshot)=>(
+           {gameScreenshots?.results.map((screenshot)=>(
             <SwiperSlide>
               <Image
                 className="rounded-lg object-cover"
@@ -150,7 +159,7 @@ const GameDetailsPage = () => {
               />
             </SwiperSlide>
           
-          ))}
+          ))} 
            
           </Swiper>
           
