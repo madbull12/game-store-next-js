@@ -33,7 +33,10 @@ const Home: NextPage = () => {
     isLoading,
     isError,
     refetch,
-  } = useQuery<IGame[]>(["fetchGames"], fetchGames);
+  } = useQuery<IGame[]>(["fetchGames"], fetchGames,{
+    refetchOnWindowFocus: true,
+    staleTime:1000000
+  });
   console.log(games);
   useEffect(() => {
     refetch();

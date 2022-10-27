@@ -34,6 +34,7 @@ const SearchPage = () => {
     () => fetchData(`https://api.rawg.io/api/games?search=${q ?? search}&`),
     {
       refetchOnWindowFocus: false,
+      staleTime:1000000
     }
   );
   useEffect(() => {
