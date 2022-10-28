@@ -85,20 +85,30 @@ const GameDetailsPage = () => {
   if (isFetching || screenshotFetching) return <Body>{null}</Body>;
 
   // console.log(gameScreenshots)
+  const variants = {
+    initial: {
+      x: -50,
+      opacity: 0,
+    },
+    animate: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: {
+      x: 1000,
+      opacity: 0,
+    },
+  };
 
   return (
     <>
       <Body>
         <div className="flex items-center justify-between px-4">
           <motion.button
-            initial={{
-              x: -50,
-              opacity: 0,
-            }}
-            animate={{
-              x: 0,
-              opacity: 1,
-            }}
+            variants={variants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
             onClick={() => back()}
             className="mt-4 flex items-center gap-x-2 text-2xl text-white"
           >
@@ -106,28 +116,20 @@ const GameDetailsPage = () => {
             <p>Back</p>
           </motion.button>
           <motion.h1
-            initial={{
-              x: -50,
-              opacity: 0,
-            }}
-            animate={{
-              x: 0,
-              opacity: 1,
-            }}
+            variants={variants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
             className="text-2xl font-black text-white"
           >
             {game?.name}
           </motion.h1>
         </div>
         <motion.div
-          initial={{
-            x: -50,
-            opacity: 0,
-          }}
-          animate={{
-            x: 0,
-            opacity: 1,
-          }}
+          variants={variants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
           className="mt-4 flex gap-x-4 "
         >
           <Swiper
@@ -166,7 +168,7 @@ const GameDetailsPage = () => {
           </Swiper>
 
           <div className="mr-2 flex-[0.5]">
-            <div className="rounded-thumb relative h-96 overflow-y-scroll rounded-lg bg-secondary  p-4 text-sm leading-relaxed text-gray-400  shadow-2xl scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#d05aff] scrollbar-thumb-rounded-full">
+            <div className="rounded-thumb inset-shadow relative h-96 overflow-y-scroll rounded-lg bg-secondary  p-4 text-sm leading-relaxed text-gray-400   scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#d05aff] scrollbar-thumb-rounded-full">
               <h1 className="mb-2 text-2xl font-bold text-white ">About</h1>
               {parse(game?.description)}
             </div>

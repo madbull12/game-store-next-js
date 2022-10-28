@@ -3,6 +3,7 @@ import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
 import {
+  AnimatePresence,
   motion,
   MotionValue,
   useMotionValue,
@@ -14,9 +15,9 @@ import { useQuery } from "@tanstack/react-query";
 import { IGame, IGameResp } from "../../interface";
 import GameCard from "../components/GameCard";
 import { v4 } from "uuid";
+import { useRouter } from "next/router";
 const Home: NextPage = () => {
   const [pageSize, setPageSize] = useState(false);
-
   const fetchGames = async () => {
     const res = await fetch(
       `https://api.rawg.io/api/games?key=${
@@ -42,6 +43,12 @@ const Home: NextPage = () => {
     refetch();
   }, [pageSize]);
 
+  const variants = {
+    hidden: { opacity: 0, x: 1000, y: 0 },
+    enter: { opacity: 1, x: 0, y: 0 },
+    exit: { opacity: 0, x: 1000,y:0 },
+  };
+
   return (
     <>
       <Head>
@@ -50,38 +57,31 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="min-h-screen pl-60 pt-4 pr-4">
-        <motion.h1
-          initial={{
-            opacity: 0,
-            x: 50,
-          }}
-          exit={{
-            opacity: 0,
-            x: 50,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-          }}
-          className="mt-4 text-6xl font-bold text-white"
-        >
-          Highest rated games
-        </motion.h1>
+          <motion.h1
+            variants={variants}
+            initial="hidden" // Set the initial state to variants.hidden
+            animate="enter" // Animated state to variants.enter
+            exit="exit"
+            className="mt-4 text-6xl font-bold text-white"
+          >
+            Highest rated games
+          </motion.h1>
+
         <motion.div
-          initial={{
-            opacity: 0,
-            x: 50,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-          }}
-          className="mt-8 grid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {games?.slice(0, pageSize ? 40 : 20).map((game: IGame) => (
-            <GameCard game={game} key={v4()} />
-          ))}
-        </motion.div>
+            variants={variants}
+         
+            initial="hidden" // Set the initial state to variants.hidden
+            animate="enter" // Animated state to variants.enter
+            exit="exit"
+            className="mt-8 grid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+          >
+            {games?.slice(0, pageSize ? 40 : 20).map((game: IGame) => (
+              <GameCard game={game} key={v4()} />
+            ))}
+          </motion.div>
+
+    
+
         <button
           onClick={() => setPageSize((prev) => !prev)}
           className="mt-4 mb-2 rounded-full bg-secondary py-2 px-4 font-bold text-white"
