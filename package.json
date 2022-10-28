@@ -30,6 +30,7 @@
     "react-icons": "^4.6.0",
     "superjson": "1.9.1",
     "swiper": "^8.4.4",
+    "tailwind-scrollbar": "^2.0.1",
     "uuidv4": "^6.2.13",
     "zod": "^3.18.0",
     "zustand": "^4.1.3"

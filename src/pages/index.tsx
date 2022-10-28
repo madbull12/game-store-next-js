@@ -33,9 +33,9 @@ const Home: NextPage = () => {
     isLoading,
     isError,
     refetch,
-  } = useQuery<IGame[]>(["fetchGames"], fetchGames,{
+  } = useQuery<IGame[]>(["fetchGames"], fetchGames, {
     refetchOnWindowFocus: true,
-    staleTime:1000000
+    staleTime: 1000000,
   });
   console.log(games);
   useEffect(() => {
@@ -50,14 +50,38 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="min-h-screen pl-60 pt-4 pr-4">
-        <h1 className="mt-4 text-6xl font-bold text-white">
+        <motion.h1
+          initial={{
+            opacity: 0,
+            x: 50,
+          }}
+          exit={{
+            opacity: 0,
+            x: 50,
+          }}
+          animate={{
+            opacity: 1,
+            x: 0,
+          }}
+          className="mt-4 text-6xl font-bold text-white"
+        >
           Highest rated games
-        </h1>
-        <div className="mt-8 grid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        </motion.h1>
+        <motion.div
+          initial={{
+            opacity: 0,
+            x: 50,
+          }}
+          animate={{
+            opacity: 1,
+            x: 0,
+          }}
+          className="mt-8 grid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+        >
           {games?.slice(0, pageSize ? 40 : 20).map((game: IGame) => (
             <GameCard game={game} key={v4()} />
           ))}
-        </div>
+        </motion.div>
         <button
           onClick={() => setPageSize((prev) => !prev)}
           className="mt-4 mb-2 rounded-full bg-secondary py-2 px-4 font-bold text-white"
