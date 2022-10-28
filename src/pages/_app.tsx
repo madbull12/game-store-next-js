@@ -28,16 +28,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <Layout>
         <AnimatePresence exitBeforeEnter initial={false}>
           <motion.div
-          key={router.route}
+            transition={{
+              type:"spring"
+            }}
+            key={router.route}
             variants={variants}
             initial="hidden"
             animate="enter"
             exit="exitState"
-            transition={{
-              type:"spring",
-              damping:10,
-              stiffness:100
-            }}
           >
             <Component {...pageProps} />
 

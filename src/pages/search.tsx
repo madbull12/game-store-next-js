@@ -31,7 +31,7 @@ const SearchPage = () => {
     isFetching,
   } = useQuery<IGameResp>(
     ["fetchSearch"],
-    () => fetchData(`https://api.rawg.io/api/games?search=${q ?? search}&`),
+    () => fetchData(`https://api.rawg.io/api/games?search=${q ?? search}&search_precise=${true}&`),
     {
       refetchOnWindowFocus: false,
       staleTime:1000000

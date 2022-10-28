@@ -3,10 +3,16 @@ import fetchData from "../../../rawg/fetchData";
 import React, { SetStateAction, useEffect, useState } from "react";
 import Body from "../../components/Body";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { BiLeftArrow } from "react-icons/bi";
+import { BiArrowToBottom, BiExpand, BiLeftArrow } from "react-icons/bi";
 import Loader from "../../components/Loader";
 import Link from "next/link";
-import { GameScreenshots, IGame, IGameDetails } from "../../../interface";
+import {
+  GameScreenshots,
+  IGame,
+  IGameDetails,
+  IParentPlatform,
+  IPlatform,
+} from "../../../interface";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import "swiper/css";
@@ -18,7 +24,8 @@ import parse from "html-react-parser";
 
 import { rawgClient } from "../../../lib/axios";
 import { Scrollbar, Navigation, Pagination, A11y, EffectFade } from "swiper";
-
+import { IoIosArrowDown } from "react-icons/io";
+import moment from "moment";
 const GameDetailsPage = () => {
   const { query, isReady, back } = useRouter();
 
@@ -87,7 +94,7 @@ const GameDetailsPage = () => {
   // console.log(gameScreenshots)
   const variants = {
     initial: {
-      x: -50,
+      x: -1000,
       opacity: 0,
     },
     animate: {
@@ -95,8 +102,9 @@ const GameDetailsPage = () => {
       opacity: 1,
     },
     exit: {
-      x: 1000,
       opacity: 0,
+
+      x: 1200,
     },
   };
 
@@ -109,6 +117,11 @@ const GameDetailsPage = () => {
             initial="initial"
             animate="animate"
             exit="exit"
+            transition={{
+              type: "string",
+              damping: 10,
+              stifness: 200,
+            }}
             onClick={() => back()}
             className="mt-4 flex items-center gap-x-2 text-2xl text-white"
           >
@@ -128,6 +141,11 @@ const GameDetailsPage = () => {
         <motion.div
           variants={variants}
           initial="initial"
+          transition={{
+            type: "string",
+            damping: 10,
+            stifness: 200,
+          }}
           animate="animate"
           exit="exit"
           className="mt-4 flex gap-x-4 "
@@ -142,7 +160,7 @@ const GameDetailsPage = () => {
             loop
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
-            className="relative flex-[0.75] rounded-lg text-white"
+            className="relative flex-[0.75] hover:cursor-grab active:cursor-grabbing neon rounded-lg text-white"
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
           >
@@ -167,13 +185,84 @@ const GameDetailsPage = () => {
             ))}
           </Swiper>
 
-          <div className="mr-2 flex-[0.5]">
-            <div className="rounded-thumb inset-shadow relative h-96 overflow-y-scroll rounded-lg bg-secondary  p-4 text-sm leading-relaxed text-gray-400   scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#d05aff] scrollbar-thumb-rounded-full">
+          <div className="mr-2 flex-[0.5] neon rounded-lg">
+            <div className="rounded-thumb inset-shadow relative h-96 overflow-y-scroll rounded-lg bg-primary  p-4 text-sm leading-relaxed text-gray-400   scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#d05aff] scrollbar-thumb-rounded-full">
               <h1 className="mb-2 text-2xl font-bold text-white ">About</h1>
               {parse(game?.description)}
             </div>
+            <div className=" bg-[#1c021f] p-4 text-white">
+              <button className="ml-auto flex gap-x-2">
+                <span>More</span>
+                <IoIosArrowDown className="animate-bounce" />
+              </button>
+              <div className="space-y-2 text-sm text-gray-400">
+                <p className="text-lg font-semibold text-white">
+                  {game?.name_original}
+                </p>
+                <div className="flex items-center justify-between pt-2  text-gray-400">
+                  <p>Release Date: </p>
+                  <p>{moment(game?.released).format("LL")}</p>
+                </div>
+                <div className="flex items-center justify-between pt-2  text-gray-400">
+                  <p>ESRB: </p>
+                  <p>{game?.esrb_rating?.name}</p>
+                </div>
+                <div className="flex-between flex justify-between gap-x-2 pt-2  text-gray-400">
+                  <p>Platforms: </p>
+                  <div className="flex  flex-wrap gap-x-2">
+                    {game?.platforms.map((platform) => (
+                      <p className="whitespace-nowrap">
+                        {" "}
+                        {platform.platform.name},
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
           {/* <p className="text-gray-400 flex-[0.5]">{convertStringToHTML(game?.description)}</p> */}
+        </motion.div>
+
+        <motion.div
+          variants={variants}
+          initial="initial"
+          transition={{
+            type: "string",
+            damping: 10,
+            stifness: 200,
+          }}
+          animate="animate"
+          exit="exit"
+          className="mt-2 w-1/2 text-sm leading-6 tracking-wide text-gray-400 "
+        >
+          <div>
+            <h1 className="mb-4 text-lg font-bold text-white">
+              System requirements for PC
+            </h1>
+            <div className="flex flex-col">
+              {game?.platforms
+                .filter((platform) => platform.platform.name === "PC")
+                .map((platform) => (
+                  <div className="space-y-3">
+                    <div className="flex flex-col">
+                      <p>Minimum</p>
+                      <p>{platform.requirements.minimum?.replace("Recommended:","")}</p>
+
+                    </div>
+                    <div className="flex flex-col">
+                      <p>Recommended</p>
+                      <p>{platform.requirements.recommended?.replace("Recommended:","")}</p>
+
+
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+         
+          
         </motion.div>
       </Body>
     </>
