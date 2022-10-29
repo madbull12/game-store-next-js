@@ -37,7 +37,7 @@ const Sidebar = () => {
         <li className="text-2xl font-semibold text-white">
           <Link href="/">HOME</Link>
         </li>
-        <div className="rounded-thumb h-80 space-y-2 overflow-y-scroll overflow-x-hidden scrollbar-thin  scrollbar-thumb-[#e3a2ff]">
+        <div className="rounded-thumb h-44 space-y-2 overflow-y-scroll overflow-x-hidden scrollbar-thin  scrollbar-thumb-[#bc13fe]">
           <h1 className="cursor-pointer text-2xl font-semibold text-white">
             Genres
           </h1>
@@ -80,6 +80,11 @@ const Sidebar = () => {
             <p>{showAll ? "Hide" : "Show all"}</p>
           </button>
         </div>
+        <li className="text-2xl font-semibold text-white">
+          <Link href={`/platforms`}>
+                Platforms
+          </Link>
+        </li>
       </ul>
     </aside>
   );

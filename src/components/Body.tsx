@@ -6,7 +6,7 @@ interface IProps {
 }
 const Body = ({ children }:IProps) => {
   return (
-    <div className='pl-60 min-h-screen'>
+    <div className='pl-60 pr-4 min-h-screen pb-14'>
         {children}
     </div>
   )
