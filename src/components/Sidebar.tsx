@@ -7,7 +7,39 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IGameResp, IGenre } from "../../interface";
 import fetchData from "../../rawg/fetchData";
 import { motion } from "framer-motion";
+
+import {
+  RiGlobalLine,
+  RiWindowsFill,
+  RiAndroidFill,
+  RiPlaystationFill,
+  RiXboxFill,
+  RiAppleFill,
+} from "react-icons/ri";
+import { SiIos, SiLinux, SiNintendoswitch } from "react-icons/si";
 const Sidebar = () => {
+  const platformIcons = [{
+    name:"PC",
+    icon:<RiWindowsFill />
+  },{
+    name:"Playstation 4",
+    icon:<RiPlaystationFill />
+  },{
+    name:"Xbox One",
+    icon: <RiXboxFill />
+  },{
+    name:"Nintendo Switch",
+    icon: <RiXboxFill />
+  },
+ {
+    name:"IOS",
+    icon: <SiIos />
+  },
+  {
+    name:"Android",
+    icon: <RiAndroidFill />
+  }]
+
   const {
     data: genres,
     isLoading,
@@ -46,7 +78,7 @@ const Sidebar = () => {
             .slice(0, showAll ? genres.results.length : 3)
             .map((genre) => (
               <li className="cursor-pointer text-sm text-gray-400 px-2">
-                <Link href={`/genre/${genre.slug}`}>
+                <Link href={`/games?genres=${genre.slug}`}>
                   <motion.div
                     whileHover={{
                       scale: 1.05,

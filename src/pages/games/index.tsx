@@ -10,8 +10,9 @@ import GameCard from "../../components/GameCard";
 import { v4 } from "uuid";
 import { BiLeftArrow } from "react-icons/bi";
 const GenrePage = () => {
-  const router = useRouter();
+  const router:any = useRouter();
   const [pageSize, setPageSize] = useState(false);
+  console.log(router.query)
 
   const {
     data: games,
@@ -23,18 +24,18 @@ const GenrePage = () => {
     () =>
       fetchData(
         `https://api.rawg.io/api/games?genres=${
-          router.query.genreId
+          router?.query?.genres
         }&page_size=${100}&`
       ),
     {
       refetchOnWindowFocus: false,
       staleTime: 1000000,
-      enabled: router.isReady,
+        enabled:router.isReady
     }
   );
   useEffect(() => {
     refetch();
-  }, [router.query.genreId]);
+  }, [router.query]);
   console.log(games);
   const variants = {
     initial: {
@@ -80,16 +81,19 @@ const GenrePage = () => {
             <BiLeftArrow />
             <p>Back</p>
           </motion.button>
-          <motion.h1
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            className="text-6xl capitalize font-black text-white"
-          >
-              {router.query.genreId} games
+          {router.isReady && (
+            <motion.h1
+              variants={variants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="text-6xl capitalize font-black text-white"
+            >
+              {router?.query?.genres} games
 
-          </motion.h1>
+            </motion.h1>
+          )}
+         
         </div>
       
       <motion.div

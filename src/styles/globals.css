@@ -1,38 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-    body{
-        font-family: 'Poppins', sans-serif;
-    }
+  body {
+    font-family: "Poppins", sans-serif;
+  }
 }
 
 @layer components {
-    .neon {
-        box-shadow: 0 4px 2px -2px #e3a2ff,
-         0 0 .2rem #fff,
-        0 0 .2rem #bc13fe,
-        0 0 0.2rem #bc13fe, 
-        0 0 .75rem #bc13fe,
-        inset 0 0 .5rem #bc13fe;
-    }
-    .swiper-button-next,
-    .swiper-button-prev {
-        color:white !important;
-    }
+  .neon {
+    box-shadow: 0 4px 2px -2px #e3a2ff, 0 0 0.2rem #fff, 0 0 0.2rem #bc13fe,
+      0 0 0.2rem #bc13fe, 0 0 0.75rem #bc13fe, inset 0 0 0.5rem #bc13fe;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: white !important;
+  }
 
-    .rounded-thumb::-webkit-scrollbar-thumb {
-        border-radius: 10px;
+  .rounded-thumb::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+  }
 
-    }
+  .platform-gradient {
+    background: rgb(32, 22, 37);
+    background: linear-gradient(
+      0deg,
+      rgba(32, 22, 37, 1) 30%,
+      rgba(32, 22, 37, 0.3477766106442577) 100%
+    );
+  }
 
-    .inset-shadow {
-     box-shadow: 0px -14px 33px -7px rgba(0,0,0,0.31) inset;
--webkit-box-shadow: 0px -14px 33px -7px rgba(0,0,0,0.31) inset;
--moz-box-shadow: 0px -14px 33px -7px rgba(0,0,0,0.31) inset;
-    }
+  .inset-shadow {
+    box-shadow: 0px -14px 33px -7px rgba(0, 0, 0, 0.31) inset;
+    -webkit-box-shadow: 0px -14px 33px -7px rgba(0, 0, 0, 0.31) inset;
+    -moz-box-shadow: 0px -14px 33px -7px rgba(0, 0, 0, 0.31) inset;
+  }
 }
