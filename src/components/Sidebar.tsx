@@ -17,25 +17,32 @@ import {
   RiAppleFill,
 } from "react-icons/ri";
 import { SiIos, SiLinux, SiNintendoswitch } from "react-icons/si";
+import { platform } from "os";
 const Sidebar = () => {
   const platformIcons = [{
+    id:4,
     name:"PC",
     icon:<RiWindowsFill />
   },{
+    id:18,
     name:"Playstation 4",
     icon:<RiPlaystationFill />
   },{
+    id:1,
     name:"Xbox One",
     icon: <RiXboxFill />
   },{
+    id:7,
     name:"Nintendo Switch",
-    icon: <RiXboxFill />
+    icon: <SiNintendoswitch />
   },
  {
+    id:3,
     name:"IOS",
     icon: <SiIos />
   },
   {
+    id:21,
     name:"Android",
     icon: <RiAndroidFill />
   }]
@@ -117,6 +124,21 @@ const Sidebar = () => {
                 Platforms
           </Link>
         </li>
+        <div className="space-y-2">
+          {platformIcons.map((platform)=>(
+            <li className="cursor-pointer text-white text-lg">
+              <Link href={`/games?platform=${platform.id}`}>
+                <div className="flex items-center gap-x-2">
+                  <span className="text-2xl">
+                  {platform.icon}
+
+                  </span>
+                  <p >{platform.name}</p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </div>
       </ul>
     </aside>
   );

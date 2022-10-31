@@ -1,18 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import fetchData from "../../../rawg/fetchData";
 import { useRouter } from "next/router";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IGame, IGameResp } from "../../../interface";
 import Body from "../../components/Body";
 import Loader from "../../components/Loader";
 import { motion } from "framer-motion";
 import GameCard from "../../components/GameCard";
 import { v4 } from "uuid";
-import { BiLeftArrow } from "react-icons/bi";
+import { BiDownArrow, BiExpand, BiLeftArrow } from "react-icons/bi";
+import OrderbyDropdown from "../../components/OrderbyDropdown";
+import ReleaseDateDropdown from "../../components/ReleaseDateDropdown";
 const GenrePage = () => {
-  const router:any = useRouter();
+  const router: any = useRouter();
   const [pageSize, setPageSize] = useState(false);
-  console.log(router.query)
+  const [genre, setGenre] = useState("action");
+  const [platform, setPlatform] = useState(4);
+  const [orderby, setOrderby] = useState("popularity");
+  const [releaseDate,setReleaseDate] = useState("2010-2019");
+  console.log(router.query);
 
   const {
     data: games,
@@ -24,13 +30,13 @@ const GenrePage = () => {
     () =>
       fetchData(
         `https://api.rawg.io/api/games?genres=${
-          router?.query?.genres
-        }&page_size=${100}&`
+          router?.query?.genres ?? genre
+        }&page_size=${100}&platforms=${router?.query?.platform ?? platform}&`
       ),
     {
       refetchOnWindowFocus: false,
       staleTime: 1000000,
-        enabled:router.isReady
+      enabled: router.isReady,
     }
   );
   useEffect(() => {
@@ -65,37 +71,39 @@ const GenrePage = () => {
   return (
     <Body>
       <div className="flex items-center justify-between px-4">
-          <motion.button
+        <motion.button
+          variants={variants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{
+            type: "string",
+            damping: 10,
+            stifness: 200,
+          }}
+          onClick={() => router.back()}
+          className="mt-4 flex items-center gap-x-2 text-2xl text-white"
+        >
+          <BiLeftArrow />
+          <p>Back</p>
+        </motion.button>
+        {router.isReady && (
+          <motion.h1
             variants={variants}
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{
-              type: "string",
-              damping: 10,
-              stifness: 200,
-            }}
-            onClick={() => router.back()}
-            className="mt-4 flex items-center gap-x-2 text-2xl text-white"
+            className="text-6xl font-black capitalize text-white"
           >
-            <BiLeftArrow />
-            <p>Back</p>
-          </motion.button>
-          {router.isReady && (
-            <motion.h1
-              variants={variants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="text-6xl capitalize font-black text-white"
-            >
-              {router?.query?.genres} games
+            {router?.query?.genres} games
+          </motion.h1>
+        )}
+      </div>
+      <div className="mt-4 flex items-center gap-x-2">
+          <OrderbyDropdown orderby={orderby} />
+          <ReleaseDateDropdown releaseDate={releaseDate} />
+      </div>
 
-            </motion.h1>
-          )}
-         
-        </div>
-      
       <motion.div
         variants={variants}
         initial="hidden" // Set the initial state to variants.hidden
@@ -109,11 +117,11 @@ const GenrePage = () => {
       </motion.div>
 
       <button
-          onClick={() => setPageSize((prev) => !prev)}
-          className="mt-4 mb-2  rounded-full ml-auto flex bg-secondary py-2 px-4 font-bold text-white"
-        >
-          {pageSize ? "Show less" : "Show more"}
-        </button>
+        onClick={() => setPageSize((prev) => !prev)}
+        className="mt-4 mb-2  ml-auto flex rounded-full bg-secondary py-2 px-4 font-bold text-white"
+      >
+        {pageSize ? "Show less" : "Show more"}
+      </button>
     </Body>
   );
 };
