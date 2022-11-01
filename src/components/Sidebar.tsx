@@ -98,6 +98,7 @@ const Sidebar = () => {
                       src={genre.image_background}
                       width={40}
                       height={40}
+                      objectFit="cover"
                       className="rounded-lg"
                     />
                     <p>{genre.name}</p>

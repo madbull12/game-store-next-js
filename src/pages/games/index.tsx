@@ -16,7 +16,7 @@ const GenrePage = () => {
   const router: any = useRouter();
   const [pageSize, setPageSize] = useState(false);
   const [genre, setGenre] = useState("action");
-  const [platform, setPlatform] = useState(4);
+  const [platform, setPlatform] = useState(router?.query?.platform);
   const [orderby, setOrderby] = useState("popularity");
   const [releaseDate,setReleaseDate] = useState("2010-2019");
   console.log(router.query);
@@ -32,7 +32,7 @@ const GenrePage = () => {
       fetchData(
         `https://api.rawg.io/api/games?genres=${
           router?.query?.genres ?? genre
-        }&page_size=${100}&platforms=${router?.query?.platform ?? platform}&ordering=${orderby}&`
+        }&page_size=${100}&platforms=${platform}&ordering=${orderby}&`
       ),
     {
       refetchOnWindowFocus: false,
@@ -42,7 +42,7 @@ const GenrePage = () => {
   );
   useEffect(() => {
     refetch();
-  }, [router.query,orderby]);
+  }, [router.query,orderby,platform]);
   console.log(games);
   const variants = {
     initial: {
@@ -103,7 +103,7 @@ const GenrePage = () => {
       <div className="mt-4 flex items-center gap-x-2">
           <OrderbyDropdown orderby={orderby} setOrderBy={setOrderby} />
           <ReleaseDateDropdown releaseDate={releaseDate} />
-          <PlatformDropdown platform={platform} />
+          <PlatformDropdown platform={platform} setPlatform={setPlatform} />
       </div>
 
       <motion.div
