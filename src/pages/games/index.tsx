@@ -16,7 +16,7 @@ const GenrePage = () => {
   const router: any = useRouter();
   const [pageSize, setPageSize] = useState(false);
   const [genre, setGenre] = useState("action");
-  const [platform, setPlatform] = useState(router?.query?.platform);
+  const [platform, setPlatform] = useState(4);
   const [orderby, setOrderby] = useState("popularity");
   const [releaseDate,setReleaseDate] = useState("2010-2019");
   console.log(router.query);
@@ -96,7 +96,7 @@ const GenrePage = () => {
             exit="exit"
             className="text-6xl font-black capitalize text-white"
           >
-            {router?.query?.genres} games
+            {router?.query?.genres ?? router?.query?.platform} games
           </motion.h1>
         )}
       </div>

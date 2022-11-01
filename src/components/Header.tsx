@@ -5,7 +5,7 @@ import Search from "./Search";
 const Header = () => {
 
   return (
-    <div className="ml-56 mt-2 flex items-center justify-between">
+    <div className="ml-56 mt-2 mr-4 flex items-center justify-between">
       <Search />
       <Profile />
     </div>

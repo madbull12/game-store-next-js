@@ -18,6 +18,8 @@ import { v4 } from "uuid";
 import { useRouter } from "next/router";
 import Body from "../components/Body";
 const Home: NextPage = () => {
+  const session = useSession();
+  console.log(session)
   const [pageSize, setPageSize] = useState(false);
   const fetchGames = async () => {
     const res = await fetch(
