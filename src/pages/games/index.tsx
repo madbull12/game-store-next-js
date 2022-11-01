@@ -11,6 +11,7 @@ import { v4 } from "uuid";
 import { BiDownArrow, BiExpand, BiLeftArrow } from "react-icons/bi";
 import OrderbyDropdown from "../../components/OrderbyDropdown";
 import ReleaseDateDropdown from "../../components/ReleaseDateDropdown";
+import PlatformDropdown from "../../components/PlatformDropdown";
 const GenrePage = () => {
   const router: any = useRouter();
   const [pageSize, setPageSize] = useState(false);
@@ -26,7 +27,7 @@ const GenrePage = () => {
     refetch,
     isFetching,
   } = useQuery<IGameResp>(
-    ["fetchGamesGenres"],
+    ["fetchGamesFilter"],
     () =>
       fetchData(
         `https://api.rawg.io/api/games?genres=${
@@ -100,8 +101,9 @@ const GenrePage = () => {
         )}
       </div>
       <div className="mt-4 flex items-center gap-x-2">
-          <OrderbyDropdown orderby={orderby} />
+          <OrderbyDropdown orderby={orderby} setOrderBy={setOrderby} />
           <ReleaseDateDropdown releaseDate={releaseDate} />
+          <PlatformDropdown platform={platform} />
       </div>
 
       <motion.div

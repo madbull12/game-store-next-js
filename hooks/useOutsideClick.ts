@@ -1,45 +1,29 @@
 import { useEffect, RefObject } from 'react';
 
-/**
- * Hook that handles outside click event of the passed refs
- *
- * @param refs array of refs
- * @param handler a handler function to be called when clicked outside
- */
-export default function useOutsideClick(
-  refs: Array<RefObject<HTMLElement> | undefined>,
-  handler?: () => void,
-) {
+type Event = MouseEvent | TouchEvent;
+
+const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
+  ref: RefObject<T>,
+  handler: (event: Event) => void,
+) => {
   useEffect(() => {
-    function handleClickOutside(event: any) {
-      if (!handler) return;
-
-      // Clicked browser's scrollbar
-      if (
-        event.target === document.getElementsByTagName('html')[0] &&
-        event.clientX >= document.documentElement.offsetWidth
-      )
+    const listener = (event: Event) => {
+      const el = ref?.current;
+      if (!el || el.contains((event?.target as Node) || null)) {
         return;
-
-      let containedToAnyRefs = false;
-      for (const rf of refs) {
-        if (rf && rf.current && rf.current.contains(event.target)) {
-          containedToAnyRefs = true;
-          break;
-        }
       }
 
-      // Not contained to any given refs
-      if (!containedToAnyRefs) {
-        handler();
-      }
-    }
-
-    // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside);
+      handler(event); // Call the handler only if the click is outside of the element passed.
     };
-  }, [refs, handler]);
-}
+
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+
+    return () => {
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  }, [ref, handler]); // Reload only if ref or handler changes
+};
+
+export default useOnClickOutside;
