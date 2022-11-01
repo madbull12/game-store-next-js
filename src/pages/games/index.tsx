@@ -32,7 +32,7 @@ const GenrePage = () => {
       fetchData(
         `https://api.rawg.io/api/games?genres=${
           router?.query?.genres ?? genre
-        }&page_size=${100}&platforms=${router?.query?.platform ?? platform}&`
+        }&page_size=${100}&platforms=${router?.query?.platform ?? platform}&ordering=${orderby}&`
       ),
     {
       refetchOnWindowFocus: false,
@@ -42,7 +42,7 @@ const GenrePage = () => {
   );
   useEffect(() => {
     refetch();
-  }, [router.query]);
+  }, [router.query,orderby]);
   console.log(games);
   const variants = {
     initial: {
