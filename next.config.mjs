@@ -16,7 +16,7 @@ function defineNextConfig(config) {
 export default defineNextConfig({
   reactStrictMode: true,
   images:{
-    domains:["media.rawg.io"]
+    domains:["media.rawg.io","lh3.googleusercontent.com"]
   },
   swcMinify: true,
   /** Next.js i18n docs:
