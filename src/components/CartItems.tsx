@@ -1,33 +1,50 @@
-import React,{ useRef } from 'react'
-import { IoMdClose } from 'react-icons/io'
-import { useCartItem, useCartMenu } from '../../lib/zustand'
-import { v4 } from 'uuid'
-import Image from 'next/image'
-import useOnClickOutside from '../../hooks/useOutsideClick'
+import React, { useRef } from "react";
+import { IoMdClose } from "react-icons/io";
+import { useCartItem, useCartMenu } from "../../lib/zustand";
+import { v4 } from "uuid";
+import Image from "next/image";
+import useOnClickOutside from "../../hooks/useOutsideClick";
+import { AnimatePresence, motion } from "framer-motion";
+import CartItem from "./CartItem";
 
 const CartItems = () => {
-    const { cartItems } = useCartItem();
-    const { closeCartMenu } = useCartMenu();
-    const menu = useRef<HTMLDivElement>(null);
-    useOnClickOutside(menu,()=>{
-        closeCartMenu()
-    })
+  const { cartItems } = useCartItem();
+  const { closeCartMenu, isOpen } = useCartMenu();
+  const menu = useRef<HTMLDivElement>(null);
+  const variants = {
+    open: {
+      right: 0,
+      opacity: 1,
+    },
+    hidden: {
+      right: -50,
+      opacity: 0,
+    },
+  };
+  useOnClickOutside(menu, () => {
+    closeCartMenu();
+  });
   return (
-    <div ref={menu} className='right-0 fixed top-0 min-h-screen p-4 flex flex-col bg-secondary w-72 z-50'>
-        <IoMdClose className='text-xl text-white cursor-pointer self-end ' onClick={closeCartMenu}/>
-        <div className='space-y-4'>
-            {cartItems.map((item)=>(
-                <div key={v4()} className="items-center flex gap-x-4 ">
-                    <Image className="rounded-lg" src={item.image} objectFit="cover" width={50} height={50} />
-                    <div className='text-sm text-gray-400 '>
-                        <p>{item.name}</p>
-                        <p>${item.price}</p>
-                    </div>
-                </div>
+        <motion.div
+          initial={{ right: -50, opacity: 0 }}
+          animate={isOpen ? "open" : "hidden"}
+          exit="hidden"
+          variants={variants}
+          ref={menu}
+          className="fixed right-0 top-0 z-50 flex min-h-screen w-72 flex-col bg-secondary p-4"
+        >
+          <IoMdClose
+            className="cursor-pointer self-end text-xl text-white "
+            onClick={closeCartMenu}
+          />
+          <div className="space-y-4">
+            {cartItems.map((item) => (
+                <CartItem item={item}  key={v4()}/>
+              
             ))}
-        </div>
-    </div>
-  )
-}
+          </div>
+        </motion.div>
+  );
+};
 
-export default CartItems
+export default CartItems;

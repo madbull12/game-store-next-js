@@ -35,7 +35,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             variants={variants}
             initial="hidden"
             animate="enter"
-            exit="exitState"
+            exit="exit"
           >
             <Component {...pageProps} />
 

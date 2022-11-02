@@ -16,7 +16,7 @@ import moment from "moment";
 
 import useHover from "../../hooks/useHover";
 import Link from "next/link";
-import { useCartItem } from "../../lib/zustand";
+import { useCartItem, useCartMenu } from "../../lib/zustand";
 
 interface IProps {
   game: IGame;
@@ -37,6 +37,7 @@ const platformIcons: Record<string, React.ReactNode> = {
 const GameCard = ({ game }: IProps) => {
   const [hoverRef,isHovering] = useHover<HTMLDivElement>();
   const { addCartItem,cartItems } = useCartItem();
+  const { openCartMenu } = useCartMenu();
 
   const cardVariants = {
     hidden:{
@@ -59,6 +60,7 @@ const GameCard = ({ game }: IProps) => {
     }
 
     await addCartItem(cart)
+    openCartMenu()
     console.log(cartItems);
 
 

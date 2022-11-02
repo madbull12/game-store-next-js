@@ -4,7 +4,7 @@ interface Search {
     search:string;
     setSearch:(value:string) => void
 }
-interface CartItem {
+export interface CartItem {
     image:string;
     name:string;
     price:string;
