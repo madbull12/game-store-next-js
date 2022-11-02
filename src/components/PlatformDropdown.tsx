@@ -3,6 +3,7 @@ import { BiDownArrow } from 'react-icons/bi'
 import { motion } from 'framer-motion'
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { useRouter } from 'next/router';
+import convertToPlatform from '../../helper/convertToPlatform';
 
 interface IProps {
     platform:number;
@@ -35,24 +36,7 @@ const PlatformDropdown = ({ platform,setPlatform }:IProps) => {
     const [open,setOpen] = useState<boolean>(false);
     const dropdown = useRef<HTMLDivElement>(null);
     const router:any = useRouter()
-    const convertToPlatform = (id:number) => {
-        switch(id) {
-            case 4:
-                return "PC"
-            case 3:
-                return "IOS"
-            case 21:
-                return "Android"
-            case 7:
-                return "Nintendo Switch"
-            case 1:
-                return "Xbox One"
-            case 18:
-                return "Playstation 4"
-            default:
-                break;
-        }
-    }
+    
     useOutsideClick(dropdown,()=>{
         setOpen(false);
     })

@@ -12,13 +12,14 @@ import { BiDownArrow, BiExpand, BiLeftArrow } from "react-icons/bi";
 import OrderbyDropdown from "../../components/OrderbyDropdown";
 import ReleaseDateDropdown from "../../components/ReleaseDateDropdown";
 import PlatformDropdown from "../../components/PlatformDropdown";
+import convertToPlatform from "../../../helper/convertToPlatform";
 const GenrePage = () => {
   const router: any = useRouter();
   const [pageSize, setPageSize] = useState(false);
   const [genre, setGenre] = useState("action");
   const [platform, setPlatform] = useState(4);
   const [orderby, setOrderby] = useState("popularity");
-  const [releaseDate,setReleaseDate] = useState("2010-2019");
+  const [releaseDate, setReleaseDate] = useState("2010-2019");
   console.log(router.query);
 
   const {
@@ -32,7 +33,7 @@ const GenrePage = () => {
       fetchData(
         `https://api.rawg.io/api/games?genres=${
           router?.query?.genres ?? genre
-        }&page_size=${100}&platforms=${platform}&ordering=${orderby}&`
+        }&page_size=${100}&platforms=${router?.query?.platform ?? platform}&ordering=${orderby}&`
       ),
     {
       refetchOnWindowFocus: false,
@@ -42,7 +43,7 @@ const GenrePage = () => {
   );
   useEffect(() => {
     refetch();
-  }, [router.query,orderby,platform]);
+  }, [router, orderby, platform]);
   console.log(games);
   const variants = {
     initial: {
@@ -68,6 +69,7 @@ const GenrePage = () => {
     );
 
   if (isFetching) return <Body>{null}</Body>;
+  console.log(router.query)
 
   return (
     <Body>
@@ -96,14 +98,14 @@ const GenrePage = () => {
             exit="exit"
             className="text-6xl font-black capitalize text-white"
           >
-            {router?.query?.genres ?? router?.query?.platform} games
+            {router.query.genres ?? convertToPlatform(parseInt(router.query.platform))} games
           </motion.h1>
         )}
       </div>
       <div className="mt-4 flex items-center gap-x-2">
-          <OrderbyDropdown orderby={orderby} setOrderBy={setOrderby} />
-          <ReleaseDateDropdown releaseDate={releaseDate} />
-          <PlatformDropdown platform={platform} setPlatform={setPlatform} />
+        <OrderbyDropdown orderby={orderby} setOrderBy={setOrderby} />
+        <ReleaseDateDropdown releaseDate={releaseDate} />
+        <PlatformDropdown platform={parseInt(router.query.platform) ?? platform} setPlatform={setPlatform} />
       </div>
 
       <motion.div
