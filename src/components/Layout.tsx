@@ -1,4 +1,5 @@
 import React from 'react'
+import CartItems from './CartItems'
 import Header from './Header'
 import Sidebar from './Sidebar'
 
@@ -11,6 +12,7 @@ const Layout = ({ children }:IProps) => {
         <Sidebar />
         <div className='pt-2 px-2'>
         <Header />
+        {/* <CartItems /> */}
 
         </div>
         {children}

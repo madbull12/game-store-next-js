@@ -24,10 +24,11 @@ import parse from "html-react-parser";
 
 import { rawgClient } from "../../../lib/axios";
 import { Scrollbar, Navigation, Pagination, A11y, EffectFade } from "swiper";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import moment from "moment";
 const GameDetailsPage = () => {
   const { query, isReady, back } = useRouter();
+  const [showMore, setShowMore] = useState(false);
 
   const fetchDetails = async () => {
     const res = await rawgClient.get(
@@ -108,6 +109,17 @@ const GameDetailsPage = () => {
     },
   };
 
+  const showMoreVariants = {
+    show: {
+      height: "auto",
+      opacity: 1,
+    },
+    hidden: {
+      height: 0,
+      opacity: 0,
+    },
+  };
+
   return (
     <>
       <Body>
@@ -160,7 +172,7 @@ const GameDetailsPage = () => {
             loop
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
-            className="relative flex-[0.75] hover:cursor-grab active:cursor-grabbing neon rounded-lg text-white"
+            className="neon relative flex-[0.75] rounded-lg text-white hover:cursor-grab active:cursor-grabbing"
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
           >
@@ -185,17 +197,25 @@ const GameDetailsPage = () => {
             ))}
           </Swiper>
 
-          <div className="mr-2 flex-[0.5] neon rounded-lg">
+          <div className="neon mr-2 flex-[0.5] rounded-lg">
             <div className="rounded-thumb inset-shadow relative h-96 overflow-y-scroll rounded-lg bg-primary  p-4 text-sm leading-relaxed text-gray-400   scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#d05aff] scrollbar-thumb-rounded-full">
               <h1 className="mb-2 text-2xl font-bold text-white ">About</h1>
               {parse(game?.description)}
             </div>
             <div className=" bg-[#1c021f] p-4 text-white">
-              <button className="ml-auto flex gap-x-2">
-                <span>More</span>
-                <IoIosArrowDown className="animate-bounce" />
+              <button
+                className="ml-auto flex gap-x-2"
+                onClick={() => setShowMore(!showMore)}
+              >
+                <span>{showMore ? "Hide" : "More"}</span>
+                {showMore ? <IoIosArrowUp className="animate-bounce" /> : <IoIosArrowDown className="animate-bounce" />}
+                
               </button>
-              <div className="space-y-2 text-sm text-gray-400">
+              <motion.div
+                variants={showMoreVariants}
+                animate={showMore ? "show" : "hidden"}
+                className={`text-smtext-gray-400 space-y-2  overflow-hidden`}
+              >
                 <p className="text-lg font-semibold text-white">
                   {game?.name_original}
                 </p>
@@ -212,13 +232,12 @@ const GameDetailsPage = () => {
                   <div className="flex  flex-wrap gap-x-2">
                     {game?.platforms.map((platform) => (
                       <p className="whitespace-nowrap">
-                        {" "}
                         {platform.platform.name},
                       </p>
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
@@ -248,21 +267,26 @@ const GameDetailsPage = () => {
                   <div className="space-y-3">
                     <div className="flex flex-col">
                       <p>Minimum</p>
-                      <p>{platform.requirements.minimum?.replace("Recommended:","")}</p>
-
+                      <p>
+                        {platform.requirements.minimum?.replace(
+                          "Recommended:",
+                          ""
+                        )}
+                      </p>
                     </div>
                     <div className="flex flex-col">
                       <p>Recommended</p>
-                      <p>{platform.requirements.recommended?.replace("Recommended:","")}</p>
-
-
+                      <p>
+                        {platform.requirements.recommended?.replace(
+                          "Recommended:",
+                          ""
+                        )}
+                      </p>
                     </div>
                   </div>
                 ))}
             </div>
           </div>
-         
-          
         </motion.div>
       </Body>
     </>

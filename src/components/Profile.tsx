@@ -11,7 +11,7 @@ const Profile = () => {
       });
     };
   return (
-    <div>
+    <div className='ml-auto'>
         {status === "unauthenticated" ? (
            <Link href={"/auth/signin"}>
             <p className='hover:border-b-2 border-[#bc13fe] text-white font-bold uppercase cursor-pointer '>

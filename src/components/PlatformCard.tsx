@@ -15,11 +15,14 @@ const PlatformCard = ({ platform }: IProps) => {
       className="h-72 w-full rounded-lg cursor-pointer"
     >
       <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-lg">
-        <Image
-          layout="fill"
-          src={platform?.image_background}
-          objectFit="cover"
-        />
+        <div>
+          <Image
+            layout="fill"
+            src={platform?.image_background}
+            objectFit="cover"
+          />
+        </div>
+     
         <div className="platform-gradient absolute  bottom-0 left-0 right-0 h-full w-full"></div>
         <div className="relative flex w-full flex-col items-center p-4">
           <h1 className="text-xl font-bold text-white  ">{platform.name}</h1>
@@ -36,10 +39,10 @@ const PlatformCard = ({ platform }: IProps) => {
                   {game.name}
                 </p>
               </Link>
-              <p className="flex items-center gap-x-1 text-gray-400">
-                {game.added}
+              <div className="flex items-center gap-x-1 text-gray-400">
+                <p>{game.added}</p>
                 <BiUser />
-              </p>
+              </div>
             </div>
           ))}
         </div>
