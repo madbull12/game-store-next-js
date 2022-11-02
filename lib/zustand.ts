@@ -10,11 +10,24 @@ interface CartItem {
     price:string;
     id:string;
 }
+
+interface CartMenu {
+    isOpen:boolean,
+    openCartMenu:()=>void,
+    closeCartMenu:()=>void
+}
+
 interface Cart {
     cartItems:CartItem[],
     addCartItem:(cartItem:CartItem) =>void;
     removeCartItem:(id:string)=>void;
 }
+
+export const useCartMenu = create<CartMenu>((set)=>({
+    isOpen:false,
+    openCartMenu:()=>set(()=>({ isOpen:true })),
+    closeCartMenu:()=>set(()=>({ isOpen:false }))
+}));
 
 export const useSearch = create<Search>((set)=>({
     search:"",
