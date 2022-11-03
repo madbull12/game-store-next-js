@@ -55,7 +55,7 @@ const GameCard = ({ game }: IProps) => {
     let cart = {
       image:game.background_image,
       name:game.name,
-      price:(game?.ratings_count / 150).toFixed(2),
+      price:Math.round((game?.ratings_count / 150)),
       id:v4()
     }
 

@@ -7,7 +7,7 @@ interface Search {
 export interface CartItem {
     image:string;
     name:string;
-    price:string;
+    price:number;
     id:string;
 }
 

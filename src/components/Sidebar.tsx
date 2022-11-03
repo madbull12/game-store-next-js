@@ -65,7 +65,7 @@ const Sidebar = () => {
   const [showAll, setShowAll] = useState(false);
 
   return (
-    <aside className="fixed min-h-screen z-50 w-56 bg-secondary p-4 ">
+    <aside className="fixed min-h-screen z-50 left-0 top-0 w-56 bg-secondary p-4 ">
       <div className="flex items-center justify-between text-white">
         <Link href="/">
           <p className="cursor-pointer text-2xl  font-black ">NXTGAME.</p>
