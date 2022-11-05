@@ -10,7 +10,7 @@ const ProgressBar = ({ progress }: { progress: MotionValue<number> }) => {
   return (
     <motion.div
       style={{ scaleX }}
-      className="fixed top-0 z-50 rounded-full  left-0 right-0 h-1 origin-[0%]  transform bg-[#d05aff]"
+      className="fixed top-0 z-[999] rounded-full  left-0 right-0 h-1 origin-[0%]  transform bg-[#d05aff]"
     ></motion.div>
   );
 };

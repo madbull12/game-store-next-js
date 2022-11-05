@@ -14,7 +14,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
                 submit_type: "pay",
                 mode:"payment",
                 payment_method_types:["card"],
-                cancel_url: `${req.headers.origin}/cancel`,
+                cancel_url: `${req.headers.origin}`,
                 success_url: `${req.headers.origin}/success?&session_id={CHECKOUT_SESSION_ID}`,
                 shipping_address_collection:{
                     allowed_countries:["US","ID" ]
