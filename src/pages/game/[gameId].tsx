@@ -219,15 +219,15 @@ const GameDetailsPage = () => {
                 <p className="text-lg font-semibold text-white">
                   {game?.name_original}
                 </p>
-                <div className="flex items-center justify-between pt-2  text-gray-400">
+                <div className="flex text-sm items-center justify-between pt-2  text-gray-400">
                   <p>Release Date: </p>
                   <p>{moment(game?.released).format("LL")}</p>
                 </div>
-                <div className="flex items-center justify-between pt-2  text-gray-400">
+                <div className="flex text-sm items-center justify-between pt-2  text-gray-400">
                   <p>ESRB: </p>
                   <p>{game?.esrb_rating?.name}</p>
                 </div>
-                <div className="flex-between flex justify-between gap-x-2 pt-2  text-gray-400">
+                <div className="flex-between text-sm flex justify-between gap-x-2 pt-2  text-gray-400">
                   <p>Platforms: </p>
                   <div className="flex  flex-wrap gap-x-2">
                     {game?.platforms.map((platform) => (

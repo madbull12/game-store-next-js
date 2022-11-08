@@ -29,42 +29,52 @@ const CartItems = () => {
     closeCartMenu();
   });
 
-  const handleCheckout = async()=>{
+  const handleCheckout = async () => {
     const stripe = await getStripe();
-    const res = await fetch("/api/create-stripe-session",{
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify(cartItems),
-        method:"POST"
+    const res = await fetch("/api/create-stripe-session", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItems),
+      method: "POST",
     });
 
-    console.log(res)
+    console.log(res);
     const data = await res.json();
-    console.log(data?.id)
-    await stripe?.redirectToCheckout({ sessionId:data?.id })
-}
+    console.log(data?.id);
+    await stripe?.redirectToCheckout({ sessionId: data?.id });
+  };
   return (
-        <motion.div
-          initial={{ right: -50, opacity: 0 }}
-          animate={isOpen ? "open" : "hidden"}
-          exit="hidden"
-          variants={variants}
-          ref={menu}
-          className="fixed right-0 top-0 z-50 flex min-h-screen w-72 flex-col bg-secondary p-4 space-y-4"
-        >
-          <IoMdClose
-            className="cursor-pointer self-end text-xl text-white "
-            onClick={closeCartMenu}
-          />
+    <motion.div
+      initial={{ right: -50, opacity: 0 }}
+      animate={isOpen ? "open" : "hidden"}
+      exit="hidden"
+      variants={variants}
+      ref={menu}
+      className="fixed right-0 top-0 z-50 flex min-h-screen w-72 flex-col space-y-4 bg-secondary p-4"
+    >
+      <IoMdClose
+        className="cursor-pointer self-end text-xl text-white "
+        onClick={closeCartMenu}
+      />
+      {cartItems.length === 0 ? (
+        <h1 className="text-4xl text-white font-semibold">No carts</h1>
+      ) : (
+        <>
           <div className="space-y-4">
             {cartItems.map((item) => (
-                <CartItem item={item}  key={v4()}/>
-              
+              <CartItem item={item} key={v4()} />
             ))}
           </div>
-          <button className="bg-[#bc13fe] rounded-lg text-white px-4 py-2" onClick={handleCheckout}>Buy</button>
-        </motion.div>
+          <button
+            className="rounded-lg bg-[#bc13fe] px-4 py-2 text-white"
+            onClick={handleCheckout}
+          >
+            Buy
+          </button>
+        </>
+      )}
+    </motion.div>
   );
 };
 
