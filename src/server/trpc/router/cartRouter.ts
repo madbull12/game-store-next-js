@@ -3,19 +3,37 @@ import { z } from "zod"
 
 
 export const cartRouter = router({
+    
     addCart:publicProcedure
-        .input(z.object({ name: z.string(), price:z.number(), image:z.string(), }).nullish())
+        .input(z.object({ name: z.string(), price:z.number(), image:z.string() }).nullish())
         .mutation(({ input,ctx })=>{
+            const session = ctx.session;
+            const userId = session?.user?.id
             
             return ctx.prisma.cart.create({
                 data:{
-                    name:input?.name,
-                    price:input?.price,
-                    image:input?.image,
+                    name:input?.name as string,
+                    price:input?.price as number,
+                    image:input?.image as string,
                     user:{
-                        
+                        connect:{
+                            id:userId
+                        }
                     }
                 }
             });
+    }),
+    getCarts:publicProcedure
+        .query(({ ctx })=>{
+            const session = ctx.session;
+            const userId = session?.user?.id
+
+            return ctx.prisma.cart.findMany({
+                where:{
+                    userId
+                }
+            });
         })
+
+    
 })

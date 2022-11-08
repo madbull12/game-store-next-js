@@ -16,7 +16,8 @@ import moment from "moment";
 
 import useHover from "../../hooks/useHover";
 import Link from "next/link";
-import { useCartItem, useCartMenu } from "../../lib/zustand";
+import { CartItem, useCartItem, useCartMenu } from "../../lib/zustand";
+import { trpc } from "../utils/trpc";
 
 interface IProps {
   game: IGame;
@@ -39,6 +40,12 @@ const GameCard = ({ game }: IProps) => {
   const { addCartItem,cartItems } = useCartItem();
   const { openCartMenu } = useCartMenu();
 
+  const { mutate:addCart } = trpc.cart.addCart.useMutation({
+    onSuccess:(cart:CartItem)=>{
+      addCartItem(cart)
+    }
+  })
+
   const cardVariants = {
     hidden:{
       opacity:0,
@@ -59,7 +66,8 @@ const GameCard = ({ game }: IProps) => {
       id:v4()
     }
 
-    await addCartItem(cart)
+    // await addCartItem(cart);
+    await addCart(cart);
     openCartMenu()
     console.log(cartItems);
 
