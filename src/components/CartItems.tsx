@@ -10,10 +10,11 @@ import getStripe from "../utils/get-stripejs";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { trpc } from "../utils/trpc";
+import Loader from "./Loader";
 
 const CartItems = () => {
   // const { cartItems } = useCartItem();
-  const { data:cartItems } = trpc.cart.getCarts.useQuery();
+  const { data:cartItems,isLoading } = trpc.cart.getCarts.useQuery();
   const [loading, setLoading] = useState(false);
   const { closeCartMenu, isOpen } = useCartMenu();
   const menu = useRef<HTMLDivElement>(null);
@@ -46,6 +47,8 @@ const CartItems = () => {
     console.log(data?.id);
     await stripe?.redirectToCheckout({ sessionId: data?.id });
   };
+
+  if(isLoading) return <Loader />
   return (
     <motion.div
       initial={{ right: -50, opacity: 0 }}

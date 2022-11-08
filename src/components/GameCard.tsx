@@ -66,7 +66,7 @@ const GameCard = ({ game }: IProps) => {
       id:v4()
     }
 
-    // await addCartItem(cart);
+    await addCartItem(cart);
     await addCart(cart);
     openCartMenu()
     console.log(cartItems);
