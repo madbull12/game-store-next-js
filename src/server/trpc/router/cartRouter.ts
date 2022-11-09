@@ -33,6 +33,15 @@ export const cartRouter = router({
                     userId
                 }
             });
+    }),
+    deleteCart:publicProcedure
+        .input(z.object({ cartId:z.string() }))
+        .mutation(({ input,ctx })=>{
+            return ctx.prisma.cart.delete({
+                where:{
+                    id:input.cartId
+                }
+            });
         })
 
     

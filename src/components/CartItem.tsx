@@ -4,15 +4,26 @@ import Image from "next/image";
 import { CartItem, useCartItem } from "../../lib/zustand";
 import { BsFillTrashFill } from "react-icons/bs";
 import useHover from "../../hooks/useHover";
+import { trpc } from "../utils/trpc";
+import { QueryClient } from "@tanstack/react-query";
 
 interface IProps {
   item: CartItem;
 }
 const CartItem = ({ item }: IProps) => {
+  const utils = trpc.useContext();
+  const client = new QueryClient();
   const [hoverRef, isHovering] = useHover<HTMLDivElement>();
-  const { removeCartItem } = useCartItem();
-  const deleteCart = async()=>{
-    await removeCartItem(item.id)
+  const { mutate:removeCartItem } = trpc.cart.deleteCart.useMutation();
+  // const { removeCartItem } = useCartItem();
+  const handleDelete = ()=>{
+    removeCartItem({
+      cartId:item.id
+    },{
+      onSuccess:()=>{
+        client.invalidateQueries(["getCarts"])
+      }
+    })
   }
   return (
     <motion.div
@@ -34,7 +45,7 @@ const CartItem = ({ item }: IProps) => {
         <p>${item.price}</p>
         {isHovering && (
           <div className="absolute bottom-0 right-0 ">
-            <BsFillTrashFill onClick={deleteCart} />
+            <BsFillTrashFill onClick={handleDelete} />
           </div>
         )}
       </div>
