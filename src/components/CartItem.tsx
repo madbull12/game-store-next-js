@@ -5,14 +5,14 @@ import { CartItem, useCartItem } from "../../lib/zustand";
 import { BsFillTrashFill } from "react-icons/bs";
 import useHover from "../../hooks/useHover";
 import { trpc } from "../utils/trpc";
-import { QueryClient } from "@tanstack/react-query";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   item: CartItem;
 }
 const CartItem = ({ item }: IProps) => {
   const utils = trpc.useContext();
-  const client = new QueryClient();
+  const queryClient = useQueryClient();
   const [hoverRef, isHovering] = useHover<HTMLDivElement>();
   const { mutate:removeCartItem } = trpc.cart.deleteCart.useMutation();
   // const { removeCartItem } = useCartItem();
@@ -20,9 +20,11 @@ const CartItem = ({ item }: IProps) => {
     removeCartItem({
       cartId:item.id
     },{
-      onSuccess:()=>{
-        client.invalidateQueries(["getCarts"])
-      }
+      
+        onSuccess() {
+          queryClient.invalidateQueries(["cart.getCarts"])
+        },
+      
     })
   }
   return (

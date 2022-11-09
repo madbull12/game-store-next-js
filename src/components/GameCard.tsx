@@ -18,7 +18,7 @@ import useHover from "../../hooks/useHover";
 import Link from "next/link";
 import { CartItem, useCartItem, useCartMenu } from "../../lib/zustand";
 import { trpc } from "../utils/trpc";
-import { QueryClient } from "@tanstack/react-query";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 interface IProps {
   game: IGame;
@@ -42,12 +42,9 @@ const GameCard = ({ game }: IProps) => {
   const [hoverRef,isHovering] = useHover<HTMLDivElement>();
   const { addCartItem,cartItems } = useCartItem();
   const { openCartMenu } = useCartMenu();
+  const queryClient = useQueryClient();
 
-  const { mutate:addCart } = trpc.cart.addCart.useMutation({
-    onSuccess() {
-      
-    },
-  })
+  const { mutate:addCart } = trpc.cart.addCart.useMutation()
 
   const cardVariants = {
     hidden:{
@@ -71,7 +68,12 @@ const GameCard = ({ game }: IProps) => {
     }
 
     // await addCartItem(cart);
-    await addCart(cart);
+    await addCart(cart,{
+      onSuccess() {
+        queryClient.invalidateQueries(["getCarts"]);
+        console.log("success")
+      },
+    });
     openCartMenu()
     console.log(cartItems);
 

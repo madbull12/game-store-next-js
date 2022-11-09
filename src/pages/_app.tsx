@@ -11,6 +11,7 @@ import Layout from "../components/Layout";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -22,6 +23,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     enter: { opacity: 1, x: 0 },
     exit: { opacity: 0, x: 1000},
   };
+  const client = new QueryClient()
   return (
     <SessionProvider session={session}>
       <ReactQueryDevtools initialIsOpen={false} />
@@ -42,6 +44,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           </motion.div>
 
         </AnimatePresence>
+        
 
       </Layout>
     </SessionProvider>
