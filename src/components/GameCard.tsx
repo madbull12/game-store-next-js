@@ -48,7 +48,8 @@ const GameCard = ({ game }: IProps) => {
   const queryClient = useQueryClient();
   const { status } = useSession();
 
-  const { mutate:addCart } = trpc.cart.addCart.useMutation()
+  const { mutate:addCart } = trpc.cart.addCart.useMutation();
+  const { mutate:addWishlist } = trpc.wishlist.addWishlist.useMutation();
 
   const cardVariants = {
     hidden:{
@@ -62,7 +63,28 @@ const GameCard = ({ game }: IProps) => {
   }
 
   const addToWishlist = async(e:React.SyntheticEvent) => {
-    e.stopPropagation()
+    e.stopPropagation();
+
+    if(status === "unauthenticated") {
+      toast.error("You have to be logged in first!")
+      return;
+    }
+    let wishlist = {
+      image:game.background_image,
+      name:game.name,
+      price:Math.round((game?.ratings_count / 150)),
+      gameId:game.id
+    }
+
+
+    await addWishlist(wishlist,{
+      onSuccess() {
+        queryClient.invalidateQueries(["getCarts"]);
+        console.log("success")
+      },
+    });
+
+    toast.success(`Adding ${wishlist.name} to wishlist`)
   }
 
   const addToCart = async(e:React.SyntheticEvent) => {
@@ -75,8 +97,9 @@ const GameCard = ({ game }: IProps) => {
       image:game.background_image,
       name:game.name,
       price:Math.round((game?.ratings_count / 150)),
-      id:v4()
+
     }
+
 
     // await addCartItem(cart);
     await addCart(cart,{
