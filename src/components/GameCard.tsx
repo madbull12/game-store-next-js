@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import toast from 'react-hot-toast'
 import { IGame, IGenre, IParentPlatform, IPlatform } from "../../interface";
 import { motion } from "framer-motion";
 import {
@@ -20,6 +21,7 @@ import { CartItem, useCartItem, useCartMenu } from "../../lib/zustand";
 import { trpc } from "../utils/trpc";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { AiFillPlusCircle, AiOutlinePlus } from "react-icons/ai";
 
 interface IProps {
   game: IGame;
@@ -62,6 +64,7 @@ const GameCard = ({ game }: IProps) => {
   const addToCart = async(e:React.SyntheticEvent) => {
     e.stopPropagation();
     if(status === "unauthenticated") {
+      toast.error("You have to be logged in first!")
       return;
     }
     let cart = {
@@ -136,8 +139,9 @@ const GameCard = ({ game }: IProps) => {
           ))}
         </div>
         <div className="flex items-center justify-between">
-          <motion.button whileHover={{ scale:1.1,color:"#bc13fe" }} onClick={addToCart}>
-            Add to cart
+          <motion.button className="flex gap-x-2 items-center" whileHover={{ scale:1.1,color:"#bc13fe" }} onClick={addToCart}>
+            <span>Add to cart</span>
+            <AiOutlinePlus />
           </motion.button>
           <p>${(game?.ratings_count / 150).toFixed(2)}</p>
         </div>

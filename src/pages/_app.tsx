@@ -12,6 +12,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -26,6 +27,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const client = new QueryClient()
   return (
     <SessionProvider session={session}>
+      <Toaster />
       <ReactQueryDevtools initialIsOpen={false} />
       <Layout>
         <AnimatePresence exitBeforeEnter initial={false}>

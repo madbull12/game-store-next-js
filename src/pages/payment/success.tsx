@@ -13,8 +13,8 @@ const SuccessPage = ({ order }:any) => {
 
     console.log(order)
   return (
-    <div className={`bg-neutral-800 min-h-screen grid place-items-center`}>
-        <motion.div animate={{ x:0,opacity:1 }} initial={{ x:"-100%",opacity:0 }} className='bg-neutral-700 p-4 text-white flex flex-col items-center space-y-4'>
+    <div className={`min-h-screen grid place-items-center`}>
+        <motion.div animate={{ x:0,opacity:1 }} initial={{ x:"-100%",opacity:0 }} className='bg-secondary rounded-lg p-4 text-white flex flex-col items-center space-y-4'>
             <h1 className='text-center font-bold text-lg md:text-2xl'>Thank you for your order</h1>
             <p className='font-semibold'>Email confirmation has been sent to: </p>
             <p className='font-semibold'>{order.customer_details.email}</p>
@@ -44,7 +44,7 @@ const SuccessPage = ({ order }:any) => {
                     </div>
                 </div>
             </div>
-            <button className='px-4 font-bold rounded-sm py-2 bg-emerald-500'>
+            <button className='px-4 font-bold rounded-sm py-2 bg-[#bc13fe]'>
                 <Link  href="/">Continue shopping</Link>
 
             </button>

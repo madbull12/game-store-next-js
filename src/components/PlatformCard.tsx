@@ -9,7 +9,8 @@ interface IProps {
 }
 const PlatformCard = ({ platform }: IProps) => {
   return (
-    <motion.div
+    <Link href={`/games?platform=${platform.id}`}>
+      <motion.div
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className="h-72 w-full rounded-lg cursor-pointer"
@@ -48,6 +49,8 @@ const PlatformCard = ({ platform }: IProps) => {
         </div>
       </div>
     </motion.div>
+    </Link>
+    
   );
 };
 
