@@ -19,6 +19,7 @@ import Link from "next/link";
 import { CartItem, useCartItem, useCartMenu } from "../../lib/zustand";
 import { trpc } from "../utils/trpc";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 interface IProps {
   game: IGame;
@@ -37,12 +38,12 @@ const platformIcons: Record<string, React.ReactNode> = {
 };
 
 const GameCard = ({ game }: IProps) => {
-  const client = new QueryClient();
-  const utils = trpc.useContext();
+  // const utils = trpc.useContext();
   const [hoverRef,isHovering] = useHover<HTMLDivElement>();
   const { addCartItem,cartItems } = useCartItem();
   const { openCartMenu } = useCartMenu();
   const queryClient = useQueryClient();
+  const { status } = useSession();
 
   const { mutate:addCart } = trpc.cart.addCart.useMutation()
 
@@ -60,6 +61,9 @@ const GameCard = ({ game }: IProps) => {
 
   const addToCart = async(e:React.SyntheticEvent) => {
     e.stopPropagation();
+    if(status === "unauthenticated") {
+      return;
+    }
     let cart = {
       image:game.background_image,
       name:game.name,

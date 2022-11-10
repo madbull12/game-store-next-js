@@ -7,6 +7,8 @@ export const cartRouter = router({
     addCart:publicProcedure
         .input(z.object({ name: z.string(), price:z.number(), image:z.string() }).nullish())
         .mutation(({ input,ctx })=>{
+            if(!ctx.session) throw new Error("You have to be logged in first")
+
             const session = ctx.session;
             const userId = session?.user?.id
             
@@ -27,7 +29,7 @@ export const cartRouter = router({
         .query(({ ctx })=>{
             const session = ctx.session;
             const userId = session?.user?.id
-
+            
             return ctx.prisma.cart.findMany({
                 where:{
                     userId
