@@ -78,4 +78,6 @@ model Wishlist {
   gameId Int
   user   User   @relation(fields: [userId], references: [id])
   userId String
+
+  @@unique([userId,gameId])
 }

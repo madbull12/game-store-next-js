@@ -3,7 +3,7 @@ import React from "react";
 import toast from 'react-hot-toast'
 import { IGame, IGenre, IParentPlatform, IPlatform } from "../../interface";
 import { motion } from "framer-motion";
-import { BiListPlus } from 'react-icons/bi'
+import { BiListCheck, BiListPlus } from 'react-icons/bi'
 import {
   RiGlobalLine,
   RiWindowsFill,
@@ -48,8 +48,13 @@ const GameCard = ({ game }: IProps) => {
   const queryClient = useQueryClient();
   const { status } = useSession();
 
+  const { data:wishlists } = trpc.wishlist.getUserWishlists.useQuery();
   const { mutate:addCart } = trpc.cart.addCart.useMutation();
-  const { mutate:addWishlist } = trpc.wishlist.addWishlist.useMutation();
+  const { mutate:deleteFromWishlist } = trpc.wishlist.deleteFromWishlist.useMutation();
+  const { mutate:addWishlist,isLoading } = trpc.wishlist.addWishlist.useMutation();
+
+  const added = wishlists?.find((wishlist)=>wishlist.gameId === game.id);
+ 
 
   const cardVariants = {
     hidden:{
@@ -62,8 +67,11 @@ const GameCard = ({ game }: IProps) => {
     }
   }
 
+ 
+
   const addToWishlist = async(e:React.SyntheticEvent) => {
     e.stopPropagation();
+  
 
     if(status === "unauthenticated") {
       toast.error("You have to be logged in first!")
@@ -76,15 +84,32 @@ const GameCard = ({ game }: IProps) => {
       gameId:game.id
     }
 
-
+    toast.success(`Added ${wishlist.name} to wishlist`)
     await addWishlist(wishlist,{
       onSuccess() {
-        queryClient.invalidateQueries(["getCarts"]);
-        console.log("success")
-      },
-    });
+        queryClient.invalidateQueries(["getUserWishlists"]);
 
-    toast.success(`Adding ${wishlist.name} to wishlist`)
+      }
+
+    })
+    
+
+  }
+  const removeWishlist = async(e:React.SyntheticEvent) => {
+    e.stopPropagation();
+  
+
+    if(status === "unauthenticated") {
+      toast.error("You have to be logged in first!")
+      return;
+    }
+   
+
+    toast.success(`Removed ${game.name} from wishlist`)
+    await deleteFromWishlist({ gameId:game.id })
+   
+    
+
   }
 
   const addToCart = async(e:React.SyntheticEvent) => {
@@ -176,8 +201,9 @@ const GameCard = ({ game }: IProps) => {
     
           <p>${(game?.ratings_count / 150).toFixed(2)}</p>
         </div>
-        <motion.button onClick={addToWishlist} whileHover={{ scale:1.1,color:"#bc13fe" }}>
-            <BiListPlus className="text-2xl"  data-tip="Add to wishlist"/>
+        <motion.button onClick={added ? removeWishlist : addToWishlist} whileHover={{ scale:1.1,color:"#bc13fe" }} >
+            {added ?<BiListCheck className="text-2xl"></BiListCheck>  : <BiListPlus className="text-2xl"  data-tip="Add to wishlist"/>}
+            
         </motion.button>
         <h1 className="text-2xl font-bold">{game?.name}</h1>
         <motion.div
