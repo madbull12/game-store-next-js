@@ -3,6 +3,7 @@ import React from "react";
 import toast from 'react-hot-toast'
 import { IGame, IGenre, IParentPlatform, IPlatform } from "../../interface";
 import { motion } from "framer-motion";
+import { BiListPlus } from 'react-icons/bi'
 import {
   RiGlobalLine,
   RiWindowsFill,
@@ -60,6 +61,9 @@ const GameCard = ({ game }: IProps) => {
     }
   }
 
+  const addToWishlist = async(e:React.SyntheticEvent) => {
+    e.stopPropagation()
+  }
 
   const addToCart = async(e:React.SyntheticEvent) => {
     e.stopPropagation();
@@ -101,6 +105,7 @@ const GameCard = ({ game }: IProps) => {
 
   return (
     <Link href={`/game/${game.id.toString()}`}>
+    
       <motion.div
       className="cursor-pointer neon border-none rounded-2xl bg-secondary text-white "
       whileHover={{ scale: 1.05 }}
@@ -124,6 +129,8 @@ const GameCard = ({ game }: IProps) => {
       
       
     >
+
+
       <div className=" relative h-[250px] w-full overflow-hidden rounded-2xl">
         {game?.background_image !== null ? (
           <Image src={game.background_image} className="object-cover" layout="fill" />
@@ -143,8 +150,12 @@ const GameCard = ({ game }: IProps) => {
             <span>Add to cart</span>
             <AiOutlinePlus />
           </motion.button>
+    
           <p>${(game?.ratings_count / 150).toFixed(2)}</p>
         </div>
+        <motion.button onClick={addToWishlist} whileHover={{ scale:1.1,color:"#bc13fe" }}>
+            <BiListPlus className="text-2xl"  data-tip="Add to wishlist"/>
+        </motion.button>
         <h1 className="text-2xl font-bold">{game?.name}</h1>
         <motion.div
           variants={variants}

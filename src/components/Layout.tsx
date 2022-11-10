@@ -5,7 +5,7 @@ import CartItems from './CartItems'
 import Header from './Header'
 import ProgressBar from './ProgressBar'
 import Sidebar from './Sidebar'
-
+import ReactTooltip from 'react-tooltip'
 interface IProps {
     children:React.ReactNode
 }
@@ -15,6 +15,7 @@ const Layout = ({ children }:IProps) => {
 
   return (
     <div>
+       <ReactTooltip />
           <ProgressBar progress={scrollYProgress}/>
 
       <div className='bg-primary p-4'>

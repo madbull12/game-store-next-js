@@ -42,14 +42,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   Cart          Cart[]
+  Wishlist      Wishlist[]
 }
 
 model VerificationToken {
@@ -65,6 +66,16 @@ model Cart {
   name   String
   price  Int
   image  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model Wishlist {
+  id     String @id @default(uuid())
+  name   String
+  price  Int
+  image  String
+  gameId Int
   user   User   @relation(fields: [userId], references: [id])
   userId String
 }
