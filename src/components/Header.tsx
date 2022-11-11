@@ -15,7 +15,7 @@ const Header = () => {
       <Search />
       <Profile />
       <div className="relative">
-        <AiOutlineShoppingCart className="text-white text-xl cursor-pointer" onClick={openCartMenu} />
+        <AiOutlineShoppingCart className="text-white hover:text-[#bc13fe] text-xl cursor-pointer" onClick={openCartMenu} />
         {status === "authenticated" ? (
       <span className="absolute text-xs place-items-center grid -top-2 -right-2 w-4 h-4 rounded-full text-white bg-[#bc13fe]">
         {cartItems?.length}

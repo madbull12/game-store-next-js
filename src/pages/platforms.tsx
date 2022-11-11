@@ -7,6 +7,7 @@ import Body from "../components/Body";
 import PlatformCard from "../components/PlatformCard";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { v4 } from 'uuid'
 const PlatformsPage = () => {
   const router = useRouter();
   const {
@@ -41,7 +42,7 @@ const PlatformsPage = () => {
   return (
     <div>
       <Body>
-        <div className="flex items-center justify-between px-4">
+        <div className="flex items-center justify-between px-4 my-4">
           <motion.button
             variants={variants}
             initial="initial"
@@ -53,7 +54,7 @@ const PlatformsPage = () => {
               stifness: 200,
             }}
             onClick={() => router.back()}
-            className="mt-4 flex items-center gap-x-2 text-2xl text-white"
+            className=" flex items-center gap-x-2 text-2xl text-white"
           >
             <BiLeftArrow />
             <p>Back</p>
@@ -64,7 +65,7 @@ const PlatformsPage = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="mb-4 text-6xl font-black capitalize text-white"
+              className=" text-3xl md:text-5xl font-black capitalize text-white"
             >
               Platforms
             </motion.h1>
@@ -72,7 +73,7 @@ const PlatformsPage = () => {
         </div>
         <div className="s grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {platforms?.results.map((platform) => (
-            <PlatformCard platform={platform} />
+            <PlatformCard key={v4()} platform={platform} />
           ))}
         </div>
       </Body>

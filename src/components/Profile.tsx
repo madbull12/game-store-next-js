@@ -2,6 +2,8 @@ import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
+import { IoMdLogIn } from 'react-icons/io';
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 const Profile = () => {
     const { data:session,status } = useSession();
@@ -10,14 +12,24 @@ const Profile = () => {
         callbackUrl: "http://localhost:3000/",
       });
     };
+
+    const desktop = useMediaQuery("(min-width:768px)");
+
+
+  
   return (
     <div className='ml-auto'>
         {status === "unauthenticated" ? (
            <Link href={"/auth/signin"}>
+            {desktop ? (
             <p className='hover:border-b-2 border-[#bc13fe] text-white font-bold uppercase cursor-pointer '>
-              Sign in
+                Sign in
 
             </p>
+            ):(
+              <IoMdLogIn className='text-white hover:text-[#bc13fe] cursor-pointer text-xl' />
+            )}
+        
            </Link>
         ):(
           <div className=" flex items-center gap-x-4">

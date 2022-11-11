@@ -37,7 +37,7 @@ const Search = () => {
         transition={{ duration: 0.5, type: "spring" }}
         variants={variants}
         animate={isFocused ? "focused" : "notFocused"}
-        className={` flex items-center gap-x-2 ${small ? "w-full" : "w-4 h-4 rounded-full"} rounded-full bg-zinc-700 px-2 py-1 text-sm md:text-base md:px-4 md:py-2`}
+        className={` flex items-center gap-x-2 ${small ? "w-full px-2 py-1" : "w-4 h-4 rounded-full"} rounded-full bg-zinc-700  text-sm md:text-base md:px-4 md:py-2`}
     >
         <BiSearch className="text-zinc-500" />
         <input
@@ -46,7 +46,7 @@ const Search = () => {
             onBlur={() => setIsFocused(false)}
             className={`w-full  bg-transparent text-white  outline-none`}
             type="text"
-            placeholder={small ? "Search for games" : ""}
+            placeholder={"Search for games"}
         />
     </motion.form>
     

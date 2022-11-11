@@ -73,7 +73,7 @@ const GenrePage = () => {
 
   return (
     <Body>
-      <div className="flex items-center justify-between px-4">
+      <div className="flex items-center justify-between px-4 gap-x-4">
         <motion.button
           variants={variants}
           initial="initial"
@@ -85,7 +85,7 @@ const GenrePage = () => {
             stifness: 200,
           }}
           onClick={() => router.back()}
-          className="mt-4 flex items-center gap-x-2 text-2xl text-white"
+          className="flex items-center gap-x-2 text-2xl text-white"
         >
           <BiLeftArrow />
           <p>Back</p>
@@ -96,13 +96,13 @@ const GenrePage = () => {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="text-6xl font-black capitalize text-white"
+            className="text-3xl md:text-5xl whitespace-nowrap font-black capitalize text-white"
           >
             {router.query.genres ?? convertToPlatform(parseInt(router.query.platform))} games
           </motion.h1>
         )}
       </div>
-      <div className="mt-4 flex items-center gap-x-2">
+      <div className="mt-4 flex items-center gap-x-2 flex-wrap gap-4">
         <OrderbyDropdown orderby={orderby} setOrderBy={setOrderby} />
         <ReleaseDateDropdown releaseDate={releaseDate} />
         <PlatformDropdown platform={parseInt(router.query.platform) ?? platform} setPlatform={setPlatform} />
