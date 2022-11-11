@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import { motion, Variant } from "framer-motion";
 import { BiSearch } from "react-icons/bi";
 import { useRouter } from "next/router";
-
+import  useMediaQuery from '../../hooks/useMediaQuery'
 import { useSearch } from "../../lib/zustand";
 import shallow from 'zustand/shallow'
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -12,12 +12,15 @@ const Search = () => {
   const [search,setSearch] = useLocalStorage("search","");
 
   const router= useRouter();
+  const matches = useMediaQuery('(min-width: 768px)')
+  const small = useMediaQuery('(min-width:500px)')
+
   const variants:{} = {
     focused: {
-      flex: 0.75,
+      flex: matches ? 0.75 : 1,
     },
     notFocused: {
-      flex: 0.25,
+      flex: matches ? 0.25 : 0.5,
     },
   };
   const handleSubmit = (e:React.SyntheticEvent) => {
@@ -25,22 +28,25 @@ const Search = () => {
     setSearch(term)
     router.push(`/search?q=${term}`,undefined,{ shallow:true });
   }
+
+
+
   return (
     <motion.form
         onSubmit={handleSubmit}
         transition={{ duration: 0.5, type: "spring" }}
         variants={variants}
         animate={isFocused ? "focused" : "notFocused"}
-        className=" flex items-center gap-x-2 rounded-full bg-zinc-700 px-4 py-2 "
+        className={` flex items-center gap-x-2 ${small ? "w-full" : "w-4 h-4 rounded-full"} rounded-full bg-zinc-700 px-2 py-1 text-sm md:text-base md:px-4 md:py-2`}
     >
         <BiSearch className="text-zinc-500" />
         <input
             onChange={(e)=>setTerm(e.target.value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            className="w-full bg-transparent text-white  outline-none"
+            className={`w-full  bg-transparent text-white  outline-none`}
             type="text"
-            placeholder="Search for games"
+            placeholder={small ? "Search for games" : ""}
         />
     </motion.form>
     
