@@ -2,6 +2,7 @@ import React,{ useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { BiDownArrow } from 'react-icons/bi'
 import useOutsideClick from '../../hooks/useOutsideClick';
+import { v4 } from 'uuid'
 
 interface IProps {
   orderby:string;
@@ -57,7 +58,7 @@ const OrderbyDropdown = ({ orderby,setOrderBy }:IProps) => {
             <motion.div initial={{ opacity:0 }} animate={{opacity:1}} className="absolute right-0 left-0 top-full z-50 flex flex-col space-y-1  bg-secondary px-4  py-2 text-sm shadow-sm [&>span]:rounded-sm [&>span]:p-1">
  
               {ordering.map((order)=>(
-                <span className="hover:bg-gray-400" onClick={()=>setOrderBy(order.slug)}>{order.name}</span>
+                <span key={v4()} className="hover:bg-gray-400" onClick={()=>setOrderBy(order.slug)}>{order.name}</span>
               ))}
             </motion.div>
           )}  

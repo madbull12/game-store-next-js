@@ -7,6 +7,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IGameResp, IGenre } from "../../interface";
 import fetchData from "../../rawg/fetchData";
 import { motion } from "framer-motion";
+import { v4 } from 'uuid'
 
 import {
   RiGlobalLine,
@@ -84,7 +85,7 @@ const Sidebar = () => {
           {genres?.results
             .slice(0, showAll ? genres.results.length : 3)
             .map((genre) => (
-              <li className="cursor-pointer text-sm text-gray-400 px-2">
+              <li className="cursor-pointer text-sm text-gray-400 px-2" key={v4()}>
                 <Link href={`/games?genres=${genre.slug}`}>
                   <motion.div
                     whileHover={{
@@ -127,7 +128,7 @@ const Sidebar = () => {
         </li>
         <div className="space-y-2">
           {platformIcons.map((platform)=>(
-            <li className="cursor-pointer text-white text-lg">
+            <li className="cursor-pointer text-white text-lg" key={v4()}>
               <Link href={`/games?platform=${platform.id}`}>
                 <div className="flex items-center gap-x-2">
                   <span className="text-2xl">

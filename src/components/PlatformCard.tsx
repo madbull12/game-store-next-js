@@ -4,6 +4,7 @@ import React from "react";
 import { BiUser } from "react-icons/bi";
 import { IPlatform } from "../../interface";
 import { motion } from "framer-motion";
+import { v4 } from 'uuid'
 interface IProps {
   platform: IPlatform;
 }
@@ -34,7 +35,7 @@ const PlatformCard = ({ platform }: IProps) => {
             </p>
           </div>
           {platform.games.slice(0, 3).map((game) => (
-            <div className="flex w-full items-center justify-between pt-1 text-sm ">
+            <div className="flex w-full items-center justify-between pt-1 text-sm " key={v4()}>
               <Link href={`/game/${game.id}`}>
                 <p className="cursor-pointer text-white underline">
                   {game.name}

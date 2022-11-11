@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { useRouter } from 'next/router';
 import convertToPlatform from '../../helper/convertToPlatform';
+import { v4 } from 'uuid'
 
 interface IProps {
     platform:number;
@@ -51,7 +52,7 @@ const PlatformDropdown = ({ platform,setPlatform }:IProps) => {
 
 
                 {platforms.map((platform)=>(
-                    <span className="hover:bg-gray-400" onClick={()=>{
+                    <span  key={v4()} className="hover:bg-gray-400" onClick={()=>{
                         setPlatform(platform.id);
                         router.query.platform = platform.id
                         router.push(router)
