@@ -12,11 +12,24 @@ import { loadStripe } from "@stripe/stripe-js";
 import { trpc } from "../utils/trpc";
 import Loader from "./Loader";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const CartItems = () => {
   // const { cartItems } = useCartItem();
+  const utils = trpc.useContext()
   const { data:session,status } = useSession();
   const { data:cartItems,isLoading } = trpc.cart.getCarts.useQuery();
+  const { mutateAsync:clearCarts } = trpc.cart.clearCarts.useMutation({
+    onSuccess(){
+      utils.cart.getCarts.invalidate()
+    }
+  });
+
+  const clearCartsHandle = async ()=>{
+    clearCarts()
+    await toast.success("Carts cleared");
+  }
+
   const [loading, setLoading] = useState(false);
   const { closeCartMenu, isOpen } = useCartMenu();
   const menu = useRef<HTMLDivElement>(null);
@@ -81,6 +94,12 @@ const CartItems = () => {
                     onClick={handleCheckout}
                   >
                     Buy
+                  </button>
+                  <button
+                    className="rounded-lg bg-[#bc13fe] px-4 py-2 text-white"
+                    onClick={clearCartsHandle}
+                  >
+                    Clear
                   </button>
                 </>
               )}

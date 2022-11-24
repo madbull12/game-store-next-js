@@ -12,19 +12,25 @@ interface IProps {
 }
 const CartItem = ({ item }: IProps) => {
   const utils = trpc.useContext();
+  
   const queryClient = useQueryClient();
   const [hoverRef, isHovering] = useHover<HTMLDivElement>();
-  const { mutate:removeCartItem } = trpc.cart.deleteCart.useMutation();
+  const { mutate:removeCartItem } = trpc.cart.deleteCart.useMutation({
+    onMutate: () => {
+      utils.cart.getCarts.cancel();
+      const optimisticUpdate = utils.cart.getCarts.getData();
+      if (optimisticUpdate) {
+        utils.cart.getCarts.setData(optimisticUpdate);
+      }
+    },
+    onSettled: () => {
+      utils.cart.getCarts.invalidate();
+    },
+  });
   // const { removeCartItem } = useCartItem();
   const handleDelete = ()=>{
     removeCartItem({
       cartId:item.id
-    },{
-      
-        onSuccess() {
-          queryClient.invalidateQueries(["cart.getCarts"])
-        },
-      
     })
   }
   return (
