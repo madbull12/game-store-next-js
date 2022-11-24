@@ -5,7 +5,6 @@ import Body from "../../components/Body";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { BiArrowToBottom, BiExpand, BiLeftArrow } from "react-icons/bi";
 import Loader from "../../components/Loader";
-import Link from "next/link";
 import { v4 } from 'uuid'
 import {
   GameScreenshots,
@@ -21,8 +20,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Image from "next/image";
-import parse from "html-react-parser";
-
+import parse from 'html-react-parser'
 import { rawgClient } from "../../../lib/axios";
 import { Scrollbar, Navigation, Pagination, A11y, EffectFade } from "swiper";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -121,6 +119,13 @@ const GameDetailsPage = () => {
     },
   };
 
+  // const stringToHTML =  (str:any) => {
+  //   const parser = new DOMParser();
+  //   const doc = parser.parseFromString(str, 'text/html');
+  //   return doc.body;
+  // };
+
+
   return (
     <>
       <Body>
@@ -201,7 +206,10 @@ const GameDetailsPage = () => {
           <div className="neon mr-2 flex-[0.5] rounded-lg">
             <div className="rounded-thumb inset-shadow relative h-96 overflow-y-scroll rounded-lg bg-primary  p-4 text-sm leading-relaxed text-gray-400   scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#d05aff] scrollbar-thumb-rounded-full">
               <h1 className="mb-2 text-2xl font-bold text-white ">About</h1>
-              {parse(game?.description)}
+              <>
+                {game?.description}
+              </>
+              
             </div>
             <div className=" bg-[#1c021f] p-4 text-white">
               <button
