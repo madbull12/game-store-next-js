@@ -227,7 +227,7 @@ const GameCard = ({ game }: IProps) => {
               <p>Genres: </p>
               <div className="flex items-center gap-x-2">
                 {game?.genres.map((genre: IGenre) => (
-                  <p>{genre?.name}</p>
+                  <p key={v4()}>{genre?.name}</p>
                 ))}
               </div>
             </div>

@@ -201,7 +201,7 @@ const GameDetailsPage = () => {
           <div className="neon mr-2 flex-[0.5] rounded-lg">
             <div className="rounded-thumb inset-shadow relative h-96 overflow-y-scroll rounded-lg bg-primary  p-4 text-sm leading-relaxed text-gray-400   scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#d05aff] scrollbar-thumb-rounded-full">
               <h1 className="mb-2 text-2xl font-bold text-white ">About</h1>
-              {parse(game?.description!)}
+              {parse(game?.description)}
             </div>
             <div className=" bg-[#1c021f] p-4 text-white">
               <button
