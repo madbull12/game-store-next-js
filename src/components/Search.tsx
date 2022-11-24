@@ -15,7 +15,7 @@ const Search = () => {
   const matches = useMediaQuery('(min-width: 768px)')
   // const small = useMediaQuery('(min-width:500px)')
 
-  const variants:{} = {
+  const variants = {
     focused: {
       flex: matches ? 0.75 : 1,
     },
