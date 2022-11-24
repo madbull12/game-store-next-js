@@ -88,7 +88,6 @@ const GameCard = ({ game }: IProps) => {
   const addToWishlist = async (e: React.SyntheticEvent) => {
     e.stopPropagation();
 
-    setWishlistAdded(true)
 
     if (status === "unauthenticated") {
       toast.error("You have to be logged in first!");
@@ -101,17 +100,20 @@ const GameCard = ({ game }: IProps) => {
       gameId: game.id,
     };
 
+    setWishlistAdded(true)
+
     toast.success(`Added ${wishlist.name} to wishlist`);
     await addWishlist(wishlist);
   };
   const removeWishlist = async (e: React.SyntheticEvent) => {
     e.stopPropagation();
-    setWishlistAdded(false)
 
     if (status === "unauthenticated") {
       toast.error("You have to be logged in first!");
       return;
     }
+    setWishlistAdded(false)
+
 
     toast.success(`Removed ${game.name} from wishlist`);
     await deleteFromWishlist({ gameId: game.id });
