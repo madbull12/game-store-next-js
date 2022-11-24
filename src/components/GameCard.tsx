@@ -94,7 +94,7 @@ const GameCard = ({ game }: IProps) => {
       toast.error("You have to be logged in first!");
       return;
     }
-    let wishlist = {
+    const wishlist = {
       image: game.background_image,
       name: game.name,
       price: Math.round(game?.ratings_count / 150),
@@ -123,7 +123,7 @@ const GameCard = ({ game }: IProps) => {
       toast.error("You have to be logged in first!");
       return;
     }
-    let cart = {
+    const cart = {
       image: game.background_image,
       name: game.name,
       price: Math.round(game?.ratings_count / 150),

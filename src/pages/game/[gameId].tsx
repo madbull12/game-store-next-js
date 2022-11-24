@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { BiArrowToBottom, BiExpand, BiLeftArrow } from "react-icons/bi";
 import Loader from "../../components/Loader";
 import Link from "next/link";
+import { v4 } from 'uuid'
 import {
   GameScreenshots,
   IGame,
@@ -187,7 +188,7 @@ const GameDetailsPage = () => {
             </SwiperSlide>
 
             {gameScreenshots?.results.map((screenshot) => (
-              <SwiperSlide>
+              <SwiperSlide key={v4()}>
                 <Image
                   className="rounded-lg object-cover transition-all duration-200 ease-in-out hover:scale-110 "
                   src={screenshot.image}
@@ -231,7 +232,7 @@ const GameDetailsPage = () => {
                   <p>Platforms: </p>
                   <div className="flex  flex-wrap gap-x-2">
                     {game?.platforms.map((platform) => (
-                      <p className="whitespace-nowrap">
+                      <p className="whitespace-nowrap" key={v4()}>
                         {platform.platform.name},
                       </p>
                     ))}
@@ -264,7 +265,7 @@ const GameDetailsPage = () => {
               {game?.platforms
                 .filter((platform) => platform.platform.name === "PC")
                 .map((platform) => (
-                  <div className="space-y-3">
+                  <div className="space-y-3" key={v4()}>
                     <div className="flex flex-col">
                       <p>Minimum</p>
                       <p>

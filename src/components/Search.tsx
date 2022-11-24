@@ -13,7 +13,7 @@ const Search = () => {
 
   const router= useRouter();
   const matches = useMediaQuery('(min-width: 768px)')
-  const small = useMediaQuery('(min-width:500px)')
+  // const small = useMediaQuery('(min-width:500px)')
 
   const variants:{} = {
     focused: {
