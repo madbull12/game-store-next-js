@@ -125,6 +125,10 @@ const GameDetailsPage = () => {
   //   const doc = parser.parseFromString(str, 'text/html');
   //   return doc.body;
   // };
+  const toHTML = (string: any) =>
+    new DOMParser().parseFromString(string, "text/html").body.childNodes[0];
+
+  console.log(game);
 
   return (
     <>
@@ -254,8 +258,6 @@ const GameDetailsPage = () => {
               </motion.div>
             </div>
           </div>
-
-          {/* <p className="text-gray-400 flex-[0.5]">{convertStringToHTML(game?.description)}</p> */}
         </motion.div>
 
         <motion.div
@@ -270,8 +272,38 @@ const GameDetailsPage = () => {
           exit="exit"
           className="mt-2 w-1/2 text-sm leading-6 tracking-wide text-gray-400 "
         >
-          <div>
-            <h1 className="mb-4 text-lg font-bold text-white">
+          <div className="mt-4 space-y-4">
+            {game?.platforms.map((platform) => (
+              <div key={v4()} className="w-full space-y-2">
+                <h1 className="text-2xl text-white ">
+                  System requirements for {platform.platform.name}
+                </h1>
+                <div className="flex flex-col ">
+                  <p className="text-xl text-white">Minimum</p>
+                  {platform.requirements.minimum === undefined ? (
+                    <p className="text-sm">Not added</p>
+                  ) : (
+                    <p className="text-sm">
+                      {platform.requirements.minimum?.replace("Minimum:", "")}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <p className="text-xl text-white">Recommended</p>
+                  {platform.requirements.recommended === undefined ? (
+                    <p className="text-sm">Not added</p>
+                  ) : (
+                    <p className="text-sm">
+                      {platform.requirements.recommended?.replace(
+                        "Recommended:",
+                        ""
+                      )}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+            {/* <h1 className="mb-4 text-lg font-bold text-white">
               System requirements for PC
             </h1>
             <div className="flex flex-col">
@@ -279,9 +311,9 @@ const GameDetailsPage = () => {
                 .filter((platform) => platform.platform.name === "PC")
                 .map((platform) => (
                   <div className="space-y-3" key={v4()}>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col ">
                       <p>Minimum</p>
-                      <p>
+                      <p className="text-sm">
                         {platform.requirements.minimum?.replace(
                           "Recommended:",
                           ""
@@ -290,7 +322,7 @@ const GameDetailsPage = () => {
                     </div>
                     <div className="flex flex-col">
                       <p>Recommended</p>
-                      <p>
+                      <p className="text-sm">
                         {platform.requirements.recommended?.replace(
                           "Recommended:",
                           ""
@@ -299,7 +331,7 @@ const GameDetailsPage = () => {
                     </div>
                   </div>
                 ))}
-            </div>
+            </div> */}
           </div>
         </motion.div>
       </Body>

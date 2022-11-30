@@ -147,7 +147,7 @@ const Sidebar = () => {
               className="cursor-pointer text-lg text-white"
               key={v4()}
               onClick={() =>
-                router.push({
+                router.replace({
                   pathname: "/games",
                   query: {
                     ...router.query,
