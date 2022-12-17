@@ -215,3 +215,11 @@ export interface IPlatform {
         slug:string;
     }[]
 }
+
+export interface IWishlist {
+    id:string;
+    name:string;
+    price:number;
+    gameId:number;
+    
+}

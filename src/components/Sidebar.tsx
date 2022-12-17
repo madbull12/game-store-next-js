@@ -84,6 +84,9 @@ const Sidebar = () => {
         <li className="text-2xl font-semibold text-white">
           <Link href="/">HOME</Link>
         </li>
+        <li className="text-2xl font-semibold text-white">
+          <Link href="/wishlist">Wishlist</Link>
+        </li>
         <div className="rounded-thumb h-44 space-y-2 overflow-y-scroll overflow-x-hidden scrollbar-thin  scrollbar-thumb-[#bc13fe]">
           <h1 className="cursor-pointer text-2xl font-semibold text-white">
             Genres

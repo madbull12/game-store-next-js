@@ -10,6 +10,7 @@ import fetchData from "../../rawg/fetchData";
 import Body from "../components/Body";
 import ProgressBar from "../components/ProgressBar";
 import { useScroll } from "framer-motion";
+import GameList from "../components/GameList";
 const SearchPage = () => {
   const { scrollYProgress } = useScroll();
 
@@ -82,11 +83,7 @@ const SearchPage = () => {
         >
           {q}
         </motion.h1>
-        <div className="mt-8 grid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {games?.results.map((game: IGame) => (
-            <GameCard game={game} key={v4()} />
-          ))}
-        </div>
+          <GameList games={games?.results as IGame[]} />
       </Body>
     </>
   );

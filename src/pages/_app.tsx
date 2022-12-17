@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import ReactTooltip from 'react-tooltip';
+import AuthWrapper from "../components/AuthWrapper";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -28,7 +29,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const client = new QueryClient()
   return (
     <SessionProvider session={session}>
-
+      <AuthWrapper>
       <Toaster  />
       <ReactQueryDevtools initialIsOpen={false} />
       <Layout>
@@ -52,6 +53,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
         
 
       </Layout>
+
+      </AuthWrapper>
+
+      
     </SessionProvider>
   );
 };

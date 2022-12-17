@@ -17,6 +17,7 @@ import GameCard from "../components/GameCard";
 import { v4 } from "uuid";
 import { useRouter } from "next/router";
 import Body from "../components/Body";
+import GameList from "../components/GameList";
 const Home: NextPage = () => {
   const session = useSession();
   console.log(session)
@@ -71,7 +72,7 @@ const Home: NextPage = () => {
             Highest rated games
           </motion.h1>
 
-        <motion.div
+        {/* <motion.div
             variants={variants}
          
             initial="hidden" // Set the initial state to variants.hidden
@@ -82,16 +83,12 @@ const Home: NextPage = () => {
             {games?.slice(0, pageSize ? 40 : 20).map((game: IGame) => (
               <GameCard game={game} key={v4()} />
             ))}
-          </motion.div>
-
+          </motion.div> */}
+          
+          <GameList games={games as IGame[]} />
     
 
-        <button
-          onClick={() => setPageSize((prev) => !prev)}
-          className="mt-4 mb-2  rounded-full ml-auto flex bg-secondary py-2 px-4 font-bold text-white"
-        >
-          {pageSize ? "Show less" : "Show more"}
-        </button>
+    
       </Body>
     </>
   );
