@@ -12,7 +12,7 @@ const Search = () => {
   const [search,setSearch] = useLocalStorage("search","");
 
   const router= useRouter();
-  const matches = useMediaQuery('(min-width: 768px)')
+  const matches = useMediaQuery('(min-width: 900px)')
   // const small = useMediaQuery('(min-width:500px)')
 
   const variants = {
@@ -20,7 +20,7 @@ const Search = () => {
       flex: matches ? 0.75 : 1,
     },
     notFocused: {
-      flex: matches ? 0.25 : 0.5,
+      flex: matches ?0.25 : 0.5,
     },
   };
   const handleSubmit = (e:React.SyntheticEvent) => {
@@ -37,7 +37,7 @@ const Search = () => {
         transition={{ duration: 0.5, type: "spring" }}
         variants={variants}
         animate={isFocused ? "focused" : "notFocused"}
-        className={` flex items-center gap-x-2 w-full px-2 py-1 rounded-full bg-zinc-700  text-sm md:text-base md:px-4 md:py-2`}
+        className={` flex  items-center gap-x-2 w-full px-2 py-1 rounded-full bg-zinc-700  text-sm md:text-base md:px-4 md:py-2`}
     >
         <BiSearch className="text-zinc-500" />
         <input

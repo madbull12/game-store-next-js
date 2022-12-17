@@ -2,11 +2,12 @@ import React from "react";
 import { trpc } from "../utils/trpc";
 import { motion } from "framer-motion";
 import GameList from "../components/GameList";
-import { IGame } from "../../interface";
+import { IGame, IWishlist } from "../../interface";
+import WishlistCard from "../components/WishlistCard";
+import Body from "../components/Body";
 const WishlistPage = () => {
   const { data: wishlists } = trpc.wishlist.getUserWishlists.useQuery();
   console.log(wishlists);
-   
 
   const titleVariants = {
     hidden: {
@@ -20,16 +21,21 @@ const WishlistPage = () => {
   };
 
   return (
-    <div>
+    <Body>
       <motion.h1
         initial="hidden"
         animate="visible"
         variants={titleVariants}
-        className="mt-4 mr-4  text-end text-4xl font-black capitalize text-white"
+        className="mt-4 mr-4 mb-4 text-end text-4xl font-black capitalize text-white"
       >
         Wishlist
       </motion.h1>
-    </div>
+      <div className="space-y-4">
+        {wishlists?.map((wishlist: IWishlist) => (
+          <WishlistCard wishlist={wishlist} />
+        ))}
+      </div>
+    </Body>
   );
 };
 

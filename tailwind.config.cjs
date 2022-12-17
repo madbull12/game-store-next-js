@@ -9,6 +9,10 @@ module.exports = {
       colors:{
         secondary:"#201625",
         primary:"#1B1220"
+      },
+      screens:{
+        "xs":"375px",
+        
       }
     },
  

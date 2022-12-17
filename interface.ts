@@ -221,5 +221,6 @@ export interface IWishlist {
     name:string;
     price:number;
     gameId:number;
-    
+    image:string;
+
 }

@@ -2,7 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { BiMenuAltLeft } from "react-icons/bi";
+import {
+  BiHome,
+  BiMenuAltLeft,
+  BiListUl,
+  BiCategoryAlt,
+  BiCategory,
+} from "react-icons/bi";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IGameResp, IGenre } from "../../interface";
 import fetchData from "../../rawg/fetchData";
@@ -20,6 +26,7 @@ import {
 import { SiIos, SiLinux, SiNintendoswitch } from "react-icons/si";
 import { platform } from "os";
 import { useRouter } from "next/router";
+import useMediaQuery from "../../hooks/useMediaQuery";
 const Sidebar = () => {
   const router = useRouter();
   const platformIcons = [
@@ -71,25 +78,26 @@ const Sidebar = () => {
 
   console.log(genres);
   const [showAll, setShowAll] = useState(false);
+  const small = useMediaQuery("(min-width:640px)");
 
   return (
-    <aside className="fixed left-0 top-0 z-50 min-h-screen w-56 bg-secondary p-4 ">
+    <aside className="fixed left-0 top-0 z-50 min-h-screen w-44 bg-secondary p-4 sm:w-56 ">
       <div className="flex items-center justify-between text-white">
         <Link href="/">
           <p className="cursor-pointer text-2xl  font-black ">NXTGAME.</p>
         </Link>
-        <BiMenuAltLeft className="cursor-pointer text-2xl" />
+        {/* <BiMenuAltLeft className="cursor-pointer text-2xl" /> */}
       </div>
       <ul className="mt-8 space-y-3 ">
         <li className="text-2xl font-semibold text-white">
-          <Link href="/">HOME</Link>
+          <Link href="/">{small ? <span>HOME</span> : <BiHome />}</Link>
         </li>
         <li className="text-2xl font-semibold text-white">
-          <Link href="/wishlist">Wishlist</Link>
+          <Link href="/">{small ? <span>WISHLIST</span> : <BiListUl />}</Link>
         </li>
         <div className="rounded-thumb h-44 space-y-2 overflow-y-scroll overflow-x-hidden scrollbar-thin  scrollbar-thumb-[#bc13fe]">
           <h1 className="cursor-pointer text-2xl font-semibold text-white">
-            Genres
+            {small ? "GENRES" : <BiCategory />}
           </h1>
 
           {genres?.results
@@ -114,16 +122,19 @@ const Sidebar = () => {
                   }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="flex items-center gap-x-2 text-white"
+                  className="flex items-center gap-x-2 text-white "
                 >
-                  <Image
-                    src={genre.image_background}
-                    width={40}
-                    height={40}
-                    objectFit="cover"
-                    className="rounded-lg"
-                  />
-                  <p>{genre.name}</p>
+                  {small ? (
+                    <Image
+                      src={genre.image_background}
+                      width={40}
+                      height={40}
+                      objectFit="cover"
+                      className="rounded-lg"
+                    />
+                  ) : null}
+
+                  <p className="text-[8px] xs:text-xs sm:text-base">{genre.name}</p>
                 </motion.div>
               </li>
             ))}

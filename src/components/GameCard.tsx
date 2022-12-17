@@ -23,6 +23,7 @@ import { trpc } from "../utils/trpc";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { AiFillPlusCircle, AiOutlinePlus } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 interface IProps {
   game: IGame;
@@ -47,6 +48,7 @@ const GameCard = ({ game }: IProps) => {
   const { openCartMenu } = useCartMenu();
   const queryClient = useQueryClient();
   const { status } = useSession();
+  const router = useRouter()
 
   const { data: wishlists } = trpc.wishlist.getUserWishlists.useQuery();
   const { mutate: addCart } = trpc.cart.addCart.useMutation({
@@ -104,6 +106,7 @@ const GameCard = ({ game }: IProps) => {
 
     toast.success(`Added ${wishlist.name} to wishlist`);
     await addWishlist(wishlist);
+    router.push("/wishlist")
   };
   const removeWishlist = async (e: React.SyntheticEvent) => {
     e.stopPropagation();
