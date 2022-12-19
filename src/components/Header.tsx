@@ -6,13 +6,20 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useCartItem, useCartMenu } from "../../lib/zustand";
 import { trpc } from "../utils/trpc";
 import { useSession } from "next-auth/react";
+import useMediaQuery from "../../hooks/useMediaQuery";
 const Header = () => {
   const { data:cartItems } = trpc.cart.getCarts.useQuery();
   const { status } = useSession();
   const { openCartMenu } = useCartMenu();
+  const isNotMobile = useMediaQuery('(min-width: 768px)')
+
   return (
-    <div className="pl-44 sm:pl-60 mt-2 mr-4 gap-x-8 flex items-center justify-between">
-      <Search />
+    <div className="pl-20 xs:pl-32 sm:pl-44 md:pl-60 mt-2 mr-4 gap-x-8 flex items-center justify-between">
+      {isNotMobile ? <Search /> : (
+        <button className="rounded-full bg-secondary   text-xl p-2 text-white">
+          <BiSearch />
+        </button>
+      )}
       <Profile />
       <div className="relative">
         <AiOutlineShoppingCart className="text-white hover:text-[#bc13fe] text-xl cursor-pointer" onClick={openCartMenu} />

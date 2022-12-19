@@ -24,6 +24,10 @@
     border-radius: 10px;
   }
 
+  .sidebar-scrollbar-short::-webkit-scrollbar-thumb {
+    width:5px;
+  }
+
   .platform-gradient {
     background: rgb(32, 22, 37);
     background: linear-gradient(

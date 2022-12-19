@@ -67,7 +67,7 @@ const Home: NextPage = () => {
             initial="hidden" // Set the initial state to variants.hidden
             animate="enter" // Animated state to variants.enter
             exit="exit"
-            className="mt-4 text-4xl md:text-6xl font-bold text-white"
+            className="mt-4 text-2xl xs:text-3xl md:text-6xl font-bold text-white"
           >
             Highest rated games
           </motion.h1>
@@ -86,7 +86,7 @@ const Home: NextPage = () => {
           </motion.div> */}
           
           <GameList games={games as IGame[]} />
-    
+    +
 
     
       </Body>

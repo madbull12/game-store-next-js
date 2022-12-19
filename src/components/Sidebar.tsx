@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { GiFloatingPlatforms } from 'react-icons/gi'
 import {
   BiHome,
   BiMenuAltLeft,
@@ -27,7 +28,7 @@ import {
   RiXboxFill,
   RiAppleFill,
 } from "react-icons/ri";
-import { SiIos, SiLinux, SiNintendoswitch } from "react-icons/si";
+import { SiIos, SiLinux, SiNintendoswitch, SiPlaystation5 } from "react-icons/si";
 import { platform } from "os";
 import { useRouter } from "next/router";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -40,6 +41,11 @@ const Sidebar = () => {
       id: 4,
       name: "PC",
       icon: <RiWindowsFill />,
+    },
+    {
+      id:187,
+      name:"Playstation 5",
+      icon:<SiPlaystation5 />
     },
     {
       id: 18,
@@ -87,10 +93,10 @@ const Sidebar = () => {
   const small = useMediaQuery("(min-width:640px)");
 
   return (
-    <aside className="fixed overflow-y-scroll left-0 top-0 z-50 h-screen  w-28 bg-secondary p-4 sm:w-44 md:w-56 ">
+    <aside className="fixed overflow-y-scroll sidebar-scrollbar-short rounded-thumb scrollbar-thin  scrollbar-thumb-[#bc13fe]  left-0 top-0 z-50 h-screen  w-24 bg-secondary p-4  sm:w-44 md:w-56 ">
       <div className="flex items-center justify-between text-white">
         <Link href="/">
-          <p className="cursor-pointer text-lg font-black  sm:text-xl  md:text-2xl ">
+          <p className="cursor-pointer text-xs font-black  sm:text-xl  md:text-2xl ">
             NXTGAME.
           </p>
         </Link>
@@ -185,7 +191,7 @@ const Sidebar = () => {
         <li className="text-2xl font-semibold text-white cursor-pointer">
           <Link href="/platforms">
             <span className="flex flex-col items-center">
-              {small ? null : <IoLogoGameControllerB />}
+              {small ? null : <GiFloatingPlatforms />}
 
               <p className="text-[10px] uppercase sm:text-2xl">PLATFORMS</p>
             </span>
