@@ -3,7 +3,7 @@ import { BiSearch } from "react-icons/bi";
 import Profile from "./Profile";
 import Search from "./Search";
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { useCartItem, useCartMenu } from "../../lib/zustand";
+import { useCartItem, useCartMenu, useSearchModal } from "../../lib/zustand";
 import { trpc } from "../utils/trpc";
 import { useSession } from "next-auth/react";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -12,11 +12,11 @@ const Header = () => {
   const { status } = useSession();
   const { openCartMenu } = useCartMenu();
   const isNotMobile = useMediaQuery('(min-width: 768px)')
-
+  const { setOpenModal } = useSearchModal();
   return (
     <div className="pl-20 xs:pl-32 sm:pl-44 md:pl-60 mt-2 mr-4 gap-x-8 flex items-center justify-between">
       {isNotMobile ? <Search /> : (
-        <button className="rounded-full bg-secondary   text-xl p-2 text-white">
+        <button onClick={()=>setOpenModal(true)} className="rounded-full bg-secondary   text-xl p-2 text-white">
           <BiSearch />
         </button>
       )}

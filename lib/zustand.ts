@@ -4,6 +4,10 @@ interface Search {
     search:string;
     setSearch:(value:string) => void
 }
+interface SearchModal {
+    isOpen:boolean;
+    setOpenModal:(value:boolean) => void
+}
 export interface CartItem {
     image:string;
     name:string;
@@ -32,6 +36,11 @@ export const useCartMenu = create<CartMenu>((set)=>({
 export const useSearch = create<Search>((set)=>({
     search:"",
     setSearch:(value:string)=>set(()=>({ search: value }))
+}));
+
+export const useSearchModal = create<SearchModal>((set)=>({
+    isOpen:false,
+    setOpenModal:(value:boolean)=>set(()=>({ isOpen:value }))
 }));
 
 export const  useCartItem = create<Cart>((set)=>({

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { GiFloatingPlatforms } from 'react-icons/gi'
+import { GiFloatingPlatforms } from "react-icons/gi";
 import {
   BiHome,
   BiMenuAltLeft,
@@ -28,7 +28,12 @@ import {
   RiXboxFill,
   RiAppleFill,
 } from "react-icons/ri";
-import { SiIos, SiLinux, SiNintendoswitch, SiPlaystation5 } from "react-icons/si";
+import {
+  SiIos,
+  SiLinux,
+  SiNintendoswitch,
+  SiPlaystation5,
+} from "react-icons/si";
 import { platform } from "os";
 import { useRouter } from "next/router";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -43,9 +48,9 @@ const Sidebar = () => {
       icon: <RiWindowsFill />,
     },
     {
-      id:187,
-      name:"Playstation 5",
-      icon:<SiPlaystation5 />
+      id: 187,
+      name: "Playstation 5",
+      icon: <SiPlaystation5 />,
     },
     {
       id: 18,
@@ -93,7 +98,7 @@ const Sidebar = () => {
   const small = useMediaQuery("(min-width:640px)");
 
   return (
-    <aside className="fixed overflow-y-scroll sidebar-scrollbar-short rounded-thumb scrollbar-thin  scrollbar-thumb-[#bc13fe]  left-0 top-0 z-50 h-screen  w-24 bg-secondary p-4  sm:w-44 md:w-56 ">
+    <aside className="sidebar-scrollbar-short rounded-thumb fixed left-0 top-0  z-50  h-screen w-24 overflow-y-scroll bg-secondary  p-4 scrollbar-thin scrollbar-thumb-[#bc13fe]  sm:w-44 md:w-56 ">
       <div className="flex items-center justify-between text-white">
         <Link href="/">
           <p className="cursor-pointer text-xs font-black  sm:text-xl  md:text-2xl ">
@@ -103,7 +108,7 @@ const Sidebar = () => {
         {/* <BiMenuAltLeft className="cursor-pointer text-2xl" /> */}
       </div>
       <ul className="mt-8 flex flex-col items-center space-y-3 sm:items-start">
-        <li className="text-2xl font-semibold text-white cursor-pointer">
+        <li className="cursor-pointer text-2xl font-semibold text-white">
           <Link href="/">
             <span className="flex flex-col items-center">
               {small ? null : <BiHome />}
@@ -113,7 +118,7 @@ const Sidebar = () => {
           </Link>
         </li>
 
-        <li className="text-2xl font-semibold text-white cursor-pointer">
+        <li className="cursor-pointer text-2xl font-semibold text-white">
           {status === "authenticated" ? (
             <Link href="/wishlist">
               <span className="flex flex-col items-center">
@@ -125,70 +130,72 @@ const Sidebar = () => {
           ) : null}
         </li>
         <div>
-          <li className="text-2xl font-semibold text-white cursor-pointer">
+          <li className="cursor-pointer text-2xl font-semibold text-white">
             <span className="flex flex-col items-center sm:items-start">
               {small ? null : <IoLogoGameControllerB />}
 
               <p className="text-[10px] uppercase sm:text-2xl">Genres</p>
             </span>
           </li>
+          {small ? (
+            <>
+              <ul className="rounded-thumb  mt-4 h-24 items-center space-y-2  overflow-y-scroll overflow-x-hidden scrollbar-thin  scrollbar-thumb-[#bc13fe]   sm:h-40 md:h-44">
+                {genres?.results
+                  .slice(0, showAll ? genres.results.length : 3)
+                  .map((genre) => (
+                    <li
+                      className="cursor-pointer px-2 text-sm text-gray-400"
+                      key={v4()}
+                      onClick={() =>
+                        router.push({
+                          pathname: "/games",
+                          query: {
+                            ...router.query,
+                            genres: genre.slug,
+                          },
+                        })
+                      }
+                    >
+                      <motion.div
+                        whileHover={{
+                          scale: 1.05,
+                        }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="flex items-center gap-x-2 text-white "
+                      >
+                        {small ? (
+                          <Image
+                            src={genre.image_background}
+                            width={40}
+                            height={40}
+                            objectFit="cover"
+                            className="rounded-lg"
+                          />
+                        ) : null}
 
-          <ul className="rounded-thumb  mt-4 h-24 items-center space-y-2  overflow-y-scroll overflow-x-hidden scrollbar-thin  scrollbar-thumb-[#bc13fe]   sm:h-40 md:h-44">
-            {genres?.results
-              .slice(0, showAll ? genres.results.length : 3)
-              .map((genre) => (
-                <li
-                  className="cursor-pointer px-2 text-sm text-gray-400"
-                  key={v4()}
-                  onClick={() =>
-                    router.push({
-                      pathname: "/games",
-                      query: {
-                        ...router.query,
-                        genres: genre.slug,
-                      },
-                    })
-                  }
-                >
-                  <motion.div
-                    whileHover={{
-                      scale: 1.05,
-                    }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex items-center gap-x-2 text-white "
-                  >
-                    {small ? (
-                      <Image
-                        src={genre.image_background}
-                        width={40}
-                        height={40}
-                        objectFit="cover"
-                        className="rounded-lg"
-                      />
-                    ) : null}
-
-                    <p className="text-[8px] xs:text-xs sm:text-base">
-                      {genre.name}
-                    </p>
-                  </motion.div>
-                </li>
-              ))}
-          </ul>
-
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="flex animate-pulse  items-center gap-x-1 text-gray-400 sm:gap-x-2"
-          >
-            <span className="rounded-lg bg-primary p-2  text-base sm:text-2xl">
-              {showAll ? <IoIosArrowUp /> : <IoIosArrowDown />}
-            </span>
-            <p className="whitespace-nowrap text-xs sm:text-base">
-              {showAll ? "Hide" : "Show all"}
-            </p>
-          </button>
+                        <p className="text-[8px] xs:text-xs sm:text-base">
+                          {genre.name}
+                        </p>
+                      </motion.div>
+                    </li>
+                  ))}
+              </ul>
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="flex animate-pulse  items-center gap-x-1 text-gray-400 sm:gap-x-2"
+              >
+                <span className="rounded-lg bg-primary p-2  text-base sm:text-2xl">
+                  {showAll ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                </span>
+                <p className="whitespace-nowrap text-xs sm:text-base">
+                  {showAll ? "Hide" : "Show all"}
+                </p>
+              </button>
+            </>
+          ) : null}
         </div>
-        <li className="text-2xl font-semibold text-white cursor-pointer">
+        <li className="cursor-pointer text-2xl font-semibold text-white">
           <Link href="/platforms">
             <span className="flex flex-col items-center">
               {small ? null : <GiFloatingPlatforms />}
