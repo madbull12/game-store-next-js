@@ -11,7 +11,7 @@ const Header = () => {
   const { status } = useSession();
   const { openCartMenu } = useCartMenu();
   return (
-    <div className="ml-56 mt-2 mr-4 gap-x-8 flex items-center justify-between">
+    <div className="pl-44 sm:pl-60 mt-2 mr-4 gap-x-8 flex items-center justify-between">
       <Search />
       <Profile />
       <div className="relative">

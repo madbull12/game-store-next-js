@@ -12,6 +12,8 @@ const convertToPlatform = (id:number) => {
             return "Xbox One"
         case 18:
             return "Playstation 4"
+        case 187:
+            return "Playstation 5"
         default:
             break;
     }

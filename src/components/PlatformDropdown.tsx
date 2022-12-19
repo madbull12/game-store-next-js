@@ -31,12 +31,15 @@ const platforms = [{
   {
     id:21,
     name:"Android",
+  },{
+    id:187,
+    name:"Playstation 5"
   }]
 
 const PlatformDropdown = ({ platform,setPlatform }:IProps) => {
     const [open,setOpen] = useState<boolean>(false);
     const dropdown = useRef<HTMLDivElement>(null);
-    const router:any = useRouter()
+    const router:any = useRouter();
     
     useOutsideClick(dropdown,()=>{
         setOpen(false);
