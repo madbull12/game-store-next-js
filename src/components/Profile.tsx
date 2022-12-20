@@ -30,7 +30,6 @@ const Profile = () => {
         </Link>
       ) : (
         <div className=" flex items-center gap-x-4">
-          <div className="flex items-center gap-x-2">
             <Image
               src={session?.user?.image ?? ""}
               width={40}
@@ -38,7 +37,6 @@ const Profile = () => {
               className="rounded-full"
             />
             {/* <p className='text-gray-400 text-sm'>{session?.user?.name}</p> */}
-          </div>
 
           <button
             className="cursor-pointer border-[#bc13fe] font-bold uppercase text-white hover:border-b-2 "

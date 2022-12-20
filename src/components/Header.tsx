@@ -14,9 +14,9 @@ const Header = () => {
   const isNotMobile = useMediaQuery('(min-width: 768px)')
   const { setOpenModal } = useSearchModal();
   return (
-    <div className="pl-20 xs:pl-32 sm:pl-44 md:pl-60 mt-2 mr-4 gap-x-8 flex items-center justify-between">
+    <div className="pl-20 xs:pl-32 sm:pl-44 md:pl-60 mt-2 mr-4 gap-x-2 sm:gap-x-4 md:gap-x-8 flex items-center justify-between">
       {isNotMobile ? <Search /> : (
-        <button onClick={()=>setOpenModal(true)} className="rounded-full bg-secondary   text-xl p-2 text-white">
+        <button onClick={()=>setOpenModal(true)} className="rounded-full bg-secondary text-lg xs:text-xl    p-2 text-white">
           <BiSearch />
         </button>
       )}

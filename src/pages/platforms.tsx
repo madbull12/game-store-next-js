@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { v4 } from "uuid";
 import Head from "next/head";
+import useMediaQuery from "../../hooks/useMediaQuery";
 const PlatformsPage = () => {
   const router = useRouter();
   const {
@@ -40,6 +41,8 @@ const PlatformsPage = () => {
       x: 1200,
     },
   };
+  const small = useMediaQuery("(min-width:640px)");
+
   return (
     <div>
       <Head>
@@ -60,10 +63,10 @@ const PlatformsPage = () => {
               stifness: 200,
             }}
             onClick={() => router.back()}
-            className=" flex items-center gap-x-2 text-2xl text-white"
+            className=" flex items-center gap-x-2 text-base xs:text-lg sm:text-2xl text-white"
           >
             <BiLeftArrow />
-            <p>Back</p>
+            {small ? <p>Back</p> : null}
           </motion.button>
           {router.isReady && (
             <motion.h1
@@ -71,7 +74,7 @@ const PlatformsPage = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              className=" text-3xl font-black capitalize text-white md:text-5xl"
+              className="xs:text-xl text-lg sm:text-3xl font-black capitalize text-white md:text-5xl"
             >
               Platforms
             </motion.h1>

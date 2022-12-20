@@ -27,17 +27,17 @@ const PlatformCard = ({ platform }: IProps) => {
      
         <div className="platform-gradient absolute  bottom-0 left-0 right-0 h-full w-full"></div>
         <div className="relative flex w-full flex-col items-center p-4">
-          <h1 className="text-xl font-bold text-white  ">{platform.name}</h1>
-          <div className="flex w-full items-center justify-between border-b border-gray-500 pb-2">
-            <p className="font-semibold text-white">Popular items</p>
+          <h1 className=" text-lg md:text-xl font-bold text-white truncate w-full ">{platform.name}</h1>
+          <div className="flex w-full gap-x-1 sm:gap-x-2 text-sm md:text-base items-center justify-between border-b border-gray-500 pb-2">
+            <p className="font-semibold text-white truncate ">Popular items</p>
             <p className="text-sm text-gray-400">
               {platform.games_count.toLocaleString()}
             </p>
           </div>
           {platform.games.slice(0, 3).map((game) => (
-            <div className="flex w-full items-center justify-between pt-1 text-sm " key={v4()}>
+            <div className="flex w-full items-center gap-x-1 sm:gap-x-2 justify-between pt-1 text-[8px] xs:text-xs md:text-sm " key={v4()}>
               <Link href={`/game/${game.id}`}>
-                <p className="cursor-pointer text-white underline">
+                <p className="cursor-pointer text-white underline truncate">
                   {game.name}
                 </p>
               </Link>

@@ -98,7 +98,7 @@ const Sidebar = () => {
   const small = useMediaQuery("(min-width:640px)");
 
   return (
-    <aside className="sidebar-scrollbar-short rounded-thumb fixed left-0 top-0  z-50  h-screen w-24 overflow-y-scroll bg-secondary  p-4 scrollbar-thin scrollbar-thumb-[#bc13fe]  sm:w-44 md:w-56 ">
+    <aside className="sidebar-scrollbar-short rounded-thumb fixed left-0 top-0  z-50  h-screen w-20 xs:w-28 overflow-y-scroll bg-secondary  p-1 sm:p-4 scrollbar-thin scrollbar-thumb-[#bc13fe]  sm:w-44 md:w-56 ">
       <div className="flex items-center justify-between text-white">
         <Link href="/">
           <p className="cursor-pointer text-xs font-black  sm:text-xl  md:text-2xl ">
