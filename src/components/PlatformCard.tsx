@@ -2,15 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { BiUser } from "react-icons/bi";
-import { IPlatform } from "../../interface";
+import { IPlatform, IPlatformData } from "../../interface";
 import { motion } from "framer-motion";
 import { v4 } from 'uuid'
+import { useRouter } from "next/router";
 interface IProps {
-  platform: IPlatform;
+  platform: IPlatformData;
 }
 const PlatformCard = ({ platform }: IProps) => {
+  const router = useRouter();
   return (
-    <Link href={`/games?platform=${platform.id}`}>
+    <Link href={`/games?${router.pathname === "/genres" ? `genres=${platform.slug}` : `platform=${platform.id}`}`}>
       <motion.div
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}

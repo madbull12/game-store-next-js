@@ -14,6 +14,7 @@ import ReleaseDateDropdown from "../../components/ReleaseDateDropdown";
 import PlatformDropdown from "../../components/PlatformDropdown";
 import convertToPlatform from "../../../helper/convertToPlatform";
 import Head from "next/head";
+import useMediaQuery from "../../../hooks/useMediaQuery";
 const GenrePage = () => {
   const router: any = useRouter();
   const [pageSize, setPageSize] = useState(false);
@@ -22,6 +23,7 @@ const GenrePage = () => {
   const [orderby, setOrderby] = useState("popularity");
   const [releaseDate, setReleaseDate] = useState("2010-2019");
   console.log(router.query);
+  const small = useMediaQuery("(min-width:640px)");
 
   const {
     data: games,
@@ -97,7 +99,7 @@ const GenrePage = () => {
             className="flex items-center gap-x-2 text-2xl text-white"
           >
             <BiLeftArrow />
-            <p>Back</p>
+            {small ? <p>Back</p> : null}
           </motion.button>
           {router.isReady && (
             <motion.h1
@@ -105,7 +107,7 @@ const GenrePage = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="whitespace-nowrap text-3xl font-black capitalize text-white md:text-5xl"
+              className="whitespace-nowrap xs:text-xl text-lg sm:text-3xl truncate font-black capitalize text-white md:text-5xl"
             >
               {router.query.genres ??
                 convertToPlatform(parseInt(router.query.platform))}{" "}

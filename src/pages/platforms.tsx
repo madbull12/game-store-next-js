@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { BiLeftArrow } from "react-icons/bi";
-import { Platform } from "../../interface";
+import { Platform, PlatformResp } from "../../interface";
 import fetchData from "../../rawg/fetchData";
 import Body from "../components/Body";
 import PlatformCard from "../components/PlatformCard";
@@ -17,7 +17,7 @@ const PlatformsPage = () => {
     isLoading,
     refetch,
     isFetching,
-  } = useQuery<Platform>(
+  } = useQuery<PlatformResp>(
     ["fetchPlatforms"],
     () => fetchData(`https://api.rawg.io/api/platforms?`),
     {
@@ -80,7 +80,7 @@ const PlatformsPage = () => {
             </motion.h1>
           )}
         </div>
-        <div className="s grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className=" grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {platforms?.results.map((platform) => (
             <PlatformCard key={v4()} platform={platform} />
           ))}

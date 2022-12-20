@@ -182,38 +182,36 @@ export interface Requirements {
     recommended: string;
 }
 
-
 export interface IGenre {
-    results:{
-        id:               number;
-        name:             string;
-        slug:             string;
-        games_count:      number;
-        image_background: string;
-    }[]
-
-}
-
-export interface Platform {
-    results:IPlatform[]
-
-}
-
-export interface IPlatform {
     id:               number;
     name:             string;
     slug:             string;
     games_count:      number;
     image_background: string;
-    image:            string;
-    year_start:       number;
-    year_end:         number;
     games:{
         added:number;
         id:number;
         name:string;
         slug:string;
     }[]
+}
+
+
+export interface GenreResp {
+    results:IGenre[]
+
+}
+
+export interface PlatformResp {
+    results:IPlatformData[]
+
+}
+
+export interface IPlatformData extends IGenre {
+    
+    year_start?:       number;
+    year_end?:         number;
+
 }
 
 export interface IWishlist {
