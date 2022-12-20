@@ -11,6 +11,7 @@ import Body from "../components/Body";
 import ProgressBar from "../components/ProgressBar";
 import { useScroll } from "framer-motion";
 import GameList from "../components/GameList";
+import SecondHeader from "../components/SecondHeader";
 const SearchPage = () => {
   const { scrollYProgress } = useScroll();
 
@@ -74,15 +75,7 @@ const SearchPage = () => {
     <>
       <ProgressBar progress={scrollYProgress} />
       <Body>
-        <div className="flex justify-between"></div>
-        <motion.h1
-          initial="hidden"
-          animate="visible"
-          variants={titleVariants}
-          className="mt-4 mr-4  text-end text-4xl font-black capitalize text-white"
-        >
-          {q}
-        </motion.h1>
+          <SecondHeader title={` ${q}`} />
           <GameList games={games?.results as IGame[]} />
       </Body>
     </>

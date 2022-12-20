@@ -5,31 +5,23 @@ import GameList from "../components/GameList";
 import { IGame, IWishlist } from "../../interface";
 import WishlistCard from "../components/WishlistCard";
 import Body from "../components/Body";
+import { useRouter } from "next/router";
+import { BiLeftArrow } from "react-icons/bi";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import SecondHeader from "../components/SecondHeader";
 const WishlistPage = () => {
   const { data: wishlists } = trpc.wishlist.getUserWishlists.useQuery();
   console.log(wishlists);
 
-  const titleVariants = {
-    hidden: {
-      opacity: 0,
-      x: 50,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-    },
-  };
+  const router = useRouter();
+
+
+  const small = useMediaQuery("(min-width:640px)");
 
   return (
     <Body>
-      <motion.h1
-        initial="hidden"
-        animate="visible"
-        variants={titleVariants}
-        className="mt-4 mr-4 mb-4 text-end text-4xl font-black capitalize text-white"
-      >
-        Wishlist
-      </motion.h1>
+      <SecondHeader title={"Wishlist"} />        
+
       <div className="space-y-4">
         {wishlists?.map((wishlist: IWishlist) => (
           <WishlistCard wishlist={wishlist} />

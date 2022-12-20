@@ -110,7 +110,7 @@ const GenrePage = () => {
               className="whitespace-nowrap xs:text-xl text-lg sm:text-3xl truncate font-black capitalize text-white md:text-5xl"
             >
               {router.query.genres ??
-                convertToPlatform(parseInt(router.query.platform))}{" "}
+                convertToPlatform(parseInt(router.query.platform))}
               games
             </motion.h1>
           )}
