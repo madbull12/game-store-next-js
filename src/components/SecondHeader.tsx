@@ -33,7 +33,7 @@ const SecondHeader = ({ title }: { title: string }) => {
   const small = useMediaQuery("(min-width:640px)");
 
   return (
-    <div className="my-4 flex items-center justify-between px-4">
+    <div className="my-6 flex items-center justify-between px-4 gap-x-2">
       <motion.button
         variants={variants}
         initial="initial"

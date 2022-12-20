@@ -15,6 +15,7 @@ import PlatformDropdown from "../../components/PlatformDropdown";
 import convertToPlatform from "../../../helper/convertToPlatform";
 import Head from "next/head";
 import useMediaQuery from "../../../hooks/useMediaQuery";
+import SecondHeader from "../../components/SecondHeader";
 const GenrePage = () => {
   const router: any = useRouter();
   const [pageSize, setPageSize] = useState(false);
@@ -84,37 +85,12 @@ const GenrePage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Body>
-        <div className="flex items-center justify-between gap-x-4 px-4">
-          <motion.button
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{
-              type: "string",
-              damping: 10,
-              stifness: 200,
-            }}
-            onClick={() => router.back()}
-            className="flex items-center gap-x-2 text-2xl text-white"
-          >
-            <BiLeftArrow />
-            {small ? <p>Back</p> : null}
-          </motion.button>
-          {router.isReady && (
-            <motion.h1
-              variants={variants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="whitespace-nowrap xs:text-xl text-lg sm:text-3xl truncate font-black capitalize text-white md:text-5xl"
-            >
-              {router.query.genres ??
-                convertToPlatform(parseInt(router.query.platform))}
-              games
-            </motion.h1>
-          )}
-        </div>
+        <SecondHeader
+          title={`${
+            router.query.genres ??
+            convertToPlatform(parseInt(router.query.platform))
+          } games`}
+        />
         <div className="mt-4 flex flex-wrap items-center gap-4 gap-x-2">
           <OrderbyDropdown orderby={orderby} setOrderBy={setOrderby} />
           <ReleaseDateDropdown releaseDate={releaseDate} />
