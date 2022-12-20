@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { BiLeftArrow } from "react-icons/bi";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import SecondHeader from "../components/SecondHeader";
+import { v4 } from 'uuid'
 const WishlistPage = () => {
   const { data: wishlists } = trpc.wishlist.getUserWishlists.useQuery();
   console.log(wishlists);
@@ -24,7 +25,7 @@ const WishlistPage = () => {
 
       <div className="space-y-4">
         {wishlists?.map((wishlist: IWishlist) => (
-          <WishlistCard wishlist={wishlist} />
+          <WishlistCard key={v4()} wishlist={wishlist} />
         ))}
       </div>
     </Body>
