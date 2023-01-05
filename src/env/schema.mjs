@@ -20,7 +20,7 @@ export const serverSchema = z.object({
   DISCORD_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID:z.string(),
   GOOGLE_CLIENT_SECRET:z.string(),
-
+  STRIPE_SECRET_KEY:z.string()
 });
 
 /**
@@ -30,6 +30,10 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
   // NEXT_PUBLIC_BAR: z.string(),
+  NEXT_PUBLIC_RAWG_API_KEY:z.string(),
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:z.string(),
+
+
 });
 
 /**
@@ -39,5 +43,7 @@ export const clientSchema = z.object({
  * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
  */
 export const clientEnv = {
-  // NEXT_PUBLIC_BAR: process.env.NEXT_PUBLIC_BAR,
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+
+  NEXT_PUBLIC_RAWG_API_KEY: process.env.NEXT_PUBLIC_RAWG_API_KEY,
 };
