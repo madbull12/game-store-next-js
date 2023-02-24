@@ -26,9 +26,12 @@ import { Scrollbar, Navigation, Pagination, A11y, EffectFade } from "swiper";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import moment from "moment";
 import Head from "next/head";
+import useMediaQuery from "../../../hooks/useMediaQuery";
 const GameDetailsPage = () => {
   const { query, isReady, back } = useRouter();
   const [showMore, setShowMore] = useState(false);
+
+  const tablet = useMediaQuery("(min-width:1024px)");
 
   const fetchDetails = async () => {
     const res = await rawgClient.get(
@@ -120,16 +123,6 @@ const GameDetailsPage = () => {
     },
   };
 
-  // const stringToHTML =  (str:any) => {
-  //   const parser = new DOMParser();
-  //   const doc = parser.parseFromString(str, 'text/html');
-  //   return doc.body;
-  // };
-  const toHTML = (string: any) =>
-    new DOMParser().parseFromString(string, "text/html").body.childNodes[0];
-
-  console.log(game);
-
   return (
     <>
       <Head>
@@ -138,7 +131,7 @@ const GameDetailsPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Body>
-        <div className="flex items-center justify-between px-4">
+        <div className="flex  items-center justify-between  gap-x-2 px-1 text-base  xs:text-lg sm:px-2 sm:text-xl lg:px-4 lg:text-2xl">
           <motion.button
             variants={variants}
             initial="initial"
@@ -150,7 +143,7 @@ const GameDetailsPage = () => {
               stifness: 200,
             }}
             onClick={() => back()}
-            className="mt-4 flex items-center gap-x-2 text-2xl text-white"
+            className=" flex items-center  gap-x-2  text-white"
           >
             <BiLeftArrow />
             <p>Back</p>
@@ -160,7 +153,7 @@ const GameDetailsPage = () => {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="text-2xl font-black text-white"
+            className=" truncate font-black text-white"
           >
             {game?.name}
           </motion.h1>
@@ -175,23 +168,25 @@ const GameDetailsPage = () => {
           }}
           animate="animate"
           exit="exit"
-          className="mt-4 flex gap-x-4 "
+          className="mt-4  flex flex-col gap-4 lg:flex-row"
         >
           <Swiper
             // install Swiper modules
             modules={[Navigation, Pagination, Scrollbar, A11y, EffectFade]}
             // spaceBetween={50}
             speed={700}
+            height={500}
+            width={500}
             slidesPerView={1}
             navigation={true}
             loop
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
-            className="neon relative flex-[0.75] rounded-lg text-white hover:cursor-grab active:cursor-grabbing"
+            className="neon relative  flex-1 w-full overflow-hidden rounded-lg text-white hover:cursor-grab active:cursor-grabbing lg:flex-[0.75]"
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
           >
-            <SwiperSlide>
+            {/* <SwiperSlide>
               <Image
                 className="rounded-lg object-cover transition-all duration-200 ease-in-out hover:scale-110 "
                 src={game?.background_image ?? ""}
@@ -199,23 +194,36 @@ const GameDetailsPage = () => {
                 // width={600}
                 // height={400}
               />
-            </SwiperSlide>
+            </SwiperSlide> */}
 
             {gameScreenshots?.results.map((screenshot) => (
               <SwiperSlide key={v4()}>
-                <Image
-                  className="rounded-lg object-cover transition-all duration-200 ease-in-out hover:scale-110 "
-                  src={screenshot.image}
-                  layout="fill"
-                />
+                {tablet ? (
+                  <Image
+                    className="overflow-hidden rounded-lg object-cover transition-all duration-200 ease-in-out hover:scale-110 "
+                    src={screenshot.image}
+                    layout="fill"
+                    alt="screenshot"
+                  />
+                ) : (
+           
+                    <Image
+                      className="overflow-hidden rounded-lg object-cover transition-all duration-200 ease-in-out hover:scale-110 "
+                      src={screenshot.image}
+                      width={600}
+                      height={400}
+                      objectFit="cover"
+                      alt="screenshot"
+                    />
+                )}
               </SwiperSlide>
             ))}
           </Swiper>
 
-          <div className="neon mr-2 flex-[0.5] rounded-lg">
+          <div className="neon mr-2 flex-[0.5] rounded-lg lg:flex-1">
             <div className="rounded-thumb inset-shadow relative h-96 overflow-y-scroll rounded-lg bg-primary  p-4 text-sm leading-relaxed text-gray-400   scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#d05aff] scrollbar-thumb-rounded-full">
               <h1 className="mb-2 text-2xl font-bold text-white ">About</h1>
-              <>{game?.description}</>
+              <>{game?.description.replace(/<[^>]+>/g, "")}</>
             </div>
             <div className=" bg-[#1c021f] p-4 text-white">
               <button
