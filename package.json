@@ -14,7 +14,7 @@
     "@prisma/client": "^4.4.0",
     "@stripe/stripe-js": "^1.42.1",
     "@tanstack/react-query": "^4.28.0",
-    "@tanstack/react-query-devtools": "^4.13.0",
+    "@tanstack/react-query-devtools": "^4.28.0",
     "@trpc/client": "^10.0.0-proxy-beta.17",
     "@trpc/next": "^10.0.0-proxy-beta.17",
     "@trpc/react": "10.0.0-proxy-beta.17",
