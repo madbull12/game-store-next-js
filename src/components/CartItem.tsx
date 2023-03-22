@@ -16,13 +16,13 @@ const CartItem = ({ item }: IProps) => {
   const queryClient = useQueryClient();
   const [hoverRef, isHovering] = useHover<HTMLDivElement>();
   const { mutate:removeCartItem } = trpc.cart.deleteCart.useMutation({
-    onMutate: () => {
-      utils.cart.getCarts.cancel();
-      const optimisticUpdate = utils.cart.getCarts.getData();
-      if (optimisticUpdate) {
-        utils.cart.getCarts.setData(optimisticUpdate);
-      }
-    },
+    // onMutate: () => {
+    //   utils.cart.getCarts.cancel();
+    //   const optimisticUpdate = utils.cart.getCarts.getData();
+    //   if (optimisticUpdate) {
+    //     utils.cart.getCarts.setData(optimisticUpdate);
+    //   }
+    // },
     onSettled: () => {
       utils.cart.getCarts.invalidate();
     },

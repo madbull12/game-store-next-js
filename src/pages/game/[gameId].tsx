@@ -19,7 +19,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import parse from "html-react-parser";
 import { rawgClient } from "../../../lib/axios";
 import { Scrollbar, Navigation, Pagination, A11y, EffectFade } from "swiper";
