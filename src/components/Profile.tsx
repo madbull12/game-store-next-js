@@ -1,5 +1,5 @@
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import React from "react";
 import { BiLogOut } from "react-icons/bi";

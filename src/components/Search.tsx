@@ -3,13 +3,14 @@ import { motion, Variant } from "framer-motion";
 import { BiSearch } from "react-icons/bi";
 import { useRouter } from "next/router";
 import  useMediaQuery from '../../hooks/useMediaQuery'
-import { useSearch } from "../../lib/zustand";
+import { useSearch, useSearchModal } from "../../lib/zustand";
 import shallow from 'zustand/shallow'
 import useLocalStorage from "../../hooks/useLocalStorage";
 const Search = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [term,setTerm] = useSearch((state)=>[state.search,state.setSearch],shallow);
   const [search,setSearch] = useLocalStorage("search","");
+  const { setOpenModal } = useSearchModal();
 
   const router= useRouter();
   const matches = useMediaQuery('(min-width: 900px)')
@@ -25,7 +26,8 @@ const Search = () => {
   };
   const handleSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
-    setSearch(term)
+    setSearch(term);
+    setOpenModal(false);
     router.push(`/search?q=${term}`,undefined,{ shallow:true });
   }
 

@@ -1,5 +1,5 @@
-import Image from "next/image";
-import React,{ useState } from "react";
+import Image from "next/legacy/image";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { IGame, IGenre, IParentPlatform, IPlatform } from "../../interface";
 import { motion } from "framer-motion";
@@ -48,31 +48,28 @@ const GameCard = ({ game }: IProps) => {
   const { openCartMenu } = useCartMenu();
   const queryClient = useQueryClient();
   const { status } = useSession();
-  const router = useRouter()
+  const router = useRouter();
 
   const { data: wishlists } = trpc.wishlist.getUserWishlists.useQuery();
   const { mutate: addCart } = trpc.cart.addCart.useMutation({
-  
     onSuccess: () => {
       utils.cart.getCarts.invalidate();
     },
   });
   const { mutate: deleteFromWishlist } =
     trpc.wishlist.deleteFromWishlist.useMutation({
-      onSuccess(){
+      onSuccess() {
         utils.wishlist.getUserWishlists.invalidate();
-
-      }
+      },
     });
   const { mutate: addWishlist, isLoading } =
     trpc.wishlist.addWishlist.useMutation({
-      onSuccess(){
+      onSuccess() {
         utils.wishlist.getUserWishlists.invalidate();
-
-      }
+      },
     });
 
-  const [wishlistAdded,setWishlistAdded] = useState(false);
+  const [wishlistAdded, setWishlistAdded] = useState(false);
 
   const added = wishlists?.find((wishlist) => wishlist.gameId === game.id);
 
@@ -90,7 +87,6 @@ const GameCard = ({ game }: IProps) => {
   const addToWishlist = async (e: React.SyntheticEvent) => {
     e.stopPropagation();
 
-
     if (status === "unauthenticated") {
       toast.error("You have to be logged in first!");
       return;
@@ -102,11 +98,11 @@ const GameCard = ({ game }: IProps) => {
       gameId: game.id,
     };
 
-    setWishlistAdded(true)
+    setWishlistAdded(true);
 
     toast.success(`Added ${wishlist.name} to wishlist`);
     await addWishlist(wishlist);
-    router.push("/wishlist")
+    router.push("/wishlist");
   };
   const removeWishlist = async (e: React.SyntheticEvent) => {
     e.stopPropagation();
@@ -115,8 +111,7 @@ const GameCard = ({ game }: IProps) => {
       toast.error("You have to be logged in first!");
       return;
     }
-    setWishlistAdded(false)
-
+    setWishlistAdded(false);
 
     toast.success(`Removed ${game.name} from wishlist`);
     await deleteFromWishlist({ gameId: game.id });
@@ -124,6 +119,7 @@ const GameCard = ({ game }: IProps) => {
 
   const addToCart = async (e: React.SyntheticEvent) => {
     e.stopPropagation();
+    e.preventDefault()
     if (status === "unauthenticated") {
       toast.error("You have to be logged in first!");
       return;
@@ -211,13 +207,22 @@ const GameCard = ({ game }: IProps) => {
             // onClick={added ? removeWishlist : addToWishlist}
             whileHover={{ scale: 1.1, color: "#bc13fe" }}
           >
-            {(wishlistAdded || added) ? (
-              <BiListCheck className="text-2xl" onClick={removeWishlist}></BiListCheck>
+            {wishlistAdded || added ? (
+              <BiListCheck
+                className="text-2xl"
+                onClick={removeWishlist}
+              ></BiListCheck>
             ) : (
-              <BiListPlus className="text-2xl" onClick={addToWishlist} data-tip="Add to wishlist" />
+              <BiListPlus
+                className="text-2xl"
+                onClick={addToWishlist}
+                data-tip="Add to wishlist"
+              />
             )}
           </motion.button>
-          <h1 className="text-2xl font-bold">{game?.name}</h1>
+          <h1 className="text-lg font-bold sm:text-xl md:text-2xl">
+            {game?.name}
+          </h1>
           <motion.div
             variants={variants}
             initial="hidden"

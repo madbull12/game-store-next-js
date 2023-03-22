@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { CartItem, useCartItem } from "../../lib/zustand";
 import { BsFillTrashFill } from "react-icons/bs";
 import useHover from "../../hooks/useHover";

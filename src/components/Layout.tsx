@@ -16,13 +16,13 @@ const Layout = ({ children }: IProps) => {
   const { isOpen: searchOpen } = useSearchModal();
 
   return (
-    <main className="overflow-x-hidden">
+    <main className="overflow-x-hidden scrollbar-thin">
       <AnimatePresence
         initial={false}
         // Only render one component at a time.
         // The exiting component will finish its exit
         // animation before entering component is rendered
-        exitBeforeEnter={true}
+        mode="wait"
         // Fires when all exiting nodes have completed animating out
         onExitComplete={() => null}
       >

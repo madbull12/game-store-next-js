@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { GiFloatingPlatforms } from "react-icons/gi";
@@ -99,7 +99,7 @@ const Sidebar = () => {
   if(router.pathname==="/auth/signin") return null;
  
   return (
-    <aside className="sidebar-scrollbar-short rounded-thumb fixed left-0 top-0  z-50  h-screen w-20 overflow-y-scroll bg-secondary p-1  scrollbar-thin scrollbar-thumb-[#bc13fe] xs:w-28 sm:w-44  sm:p-4 md:w-56 ">
+    <aside className="sidebar-scrollbar-short rounded-thumb fixed left-0 top-0  z-50  h-screen w-20 overflow-y-scroll bg-secondary   scrollbar-thin scrollbar-thumb-[#bc13fe] xs:w-20 sm:w-44 p-1  sm:p-4 md:w-56 ">
       <div className="flex items-center justify-between text-white">
         <Link href="/">
           <p className="cursor-pointer text-xs font-black  sm:text-xl  md:text-2xl ">
